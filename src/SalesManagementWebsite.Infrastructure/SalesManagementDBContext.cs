@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SalesManagementWebsite.Domain.Entities;
 
 namespace SalesManagementWebsite.Infrastructure

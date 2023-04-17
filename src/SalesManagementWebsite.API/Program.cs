@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SalesManagementWebsite.API.Services.User;
 using SalesManagementWebsite.Domain.UnitOfWork;
+using SalesManagementWebsite.Infrastructure;
 using SalesManagementWebsite.Infrastructure.UnitOfWork;
 using System.Text;
 
@@ -13,6 +16,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseSqlServer(connectionString));
 
 //Config JWT
 builder.Services.AddAuthentication(options =>
