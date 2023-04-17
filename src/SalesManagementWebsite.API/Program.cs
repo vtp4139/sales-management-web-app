@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SalesManagementWebsite.API.Services.User;
+using SalesManagementWebsite.Domain.UnitOfWork;
+using SalesManagementWebsite.Infrastructure.UnitOfWork;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +34,10 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
         };
     });
+
+//Dependency Injection
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
 
 var app = builder.Build();
 
