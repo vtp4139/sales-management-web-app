@@ -18,6 +18,7 @@ namespace SalesManagementWebsite.API.Controllers
         [HttpPost]
         public async Task Register(UserRegisterDto userRegisterDto)
         {
+            //Test user.name and user.email
             await _userService.Register(userRegisterDto);
         }
     }
