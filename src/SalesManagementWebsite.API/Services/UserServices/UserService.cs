@@ -1,4 +1,5 @@
-﻿using SalesManagementWebsite.Contracts.Dtos.User;
+﻿using AutoMapper;
+using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 
@@ -6,23 +7,18 @@ namespace SalesManagementWebsite.API.Services.UserServices
 {
     public class UserService : IUserService
     {
-        public IUnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
+        private IMapper _mapper;    
 
-        public UserService(IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<UserOuputDto> Register(UserRegisterDto registerDto)
         {
-            var user = new User
-            {
-                UserName = registerDto.UserName,
-                Password = registerDto.Password,
-                Email = registerDto.Email,
-                Phone = registerDto.Phone,
-                Address = registerDto.Address,
-            };
+            var user = _mapper.Map<UserRegisterDto, User>(registerDto);
 
             _unitOfWork.UserRepository.Add(user);
             await _unitOfWork.CommitAsync();
