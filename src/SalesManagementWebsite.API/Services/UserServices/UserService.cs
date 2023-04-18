@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SalesManagementWebsite.API.Services.HashServices;
 using SalesManagementWebsite.API.Services.JWTServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
@@ -24,10 +25,8 @@ namespace SalesManagementWebsite.API.Services.UserServices
         public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
         {
             try
-            {
-                var user = _mapper.Map<UserLoginDto, User>(userLoginDto);
-
-                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(user.UserName) && u.Password.Equals(user.Password));
+            {               
+                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userLoginDto.UserName)); 
 
                 if (userLogin == null)
                 {
@@ -40,14 +39,29 @@ namespace SalesManagementWebsite.API.Services.UserServices
                     };
                 }
 
+                //Hash password input and then compare
+                bool comparePass = userLogin.Password.Equals(HashPasswordsHelper.HashPasswords(userLoginDto.Password, userLogin.Salt));
+
+                if (!comparePass)
+                {
+                    return new ResponseHandle<UserOuputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = "Password is wrong, please try a new password!"
+                };
+            }
+
+                //Gen JWT Token
                 var token = TokenHelper.GenerateToken(
               _configuration["JWT:Secret"]
               , _configuration["JWT:ValidIssuer"]
               , _configuration["JWT:ValidAudience"]
               , null
-              , user.Id.ToString()
-              , user.UserName
-              , user.Name);
+              , userLogin.Id.ToString()
+              , userLogin.UserName
+              , userLogin.Name);
 
                 var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
 
@@ -73,6 +87,10 @@ namespace SalesManagementWebsite.API.Services.UserServices
             try
             {
                 var user = _mapper.Map<UserRegisterDto, User>(registerDto);
+
+                //Hash password when save to db
+                user.Salt = HashPasswordsHelper.GeneratedSalt();
+                user.Password = HashPasswordsHelper.HashPasswords(user.Password, user.Salt);
 
                 _unitOfWork.UserRepository.Add(user);
                 await _unitOfWork.CommitAsync();
