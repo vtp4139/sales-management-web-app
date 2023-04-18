@@ -1,4 +1,4 @@
-﻿using SalesManagementWebsite.Domain;
+﻿using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.Repositories;
 

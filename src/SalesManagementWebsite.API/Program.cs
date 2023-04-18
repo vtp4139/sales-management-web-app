@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
-using SalesManagementWebsite.API.Services.User;
+using SalesManagementWebsite.API.Services.UserServices;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using SalesManagementWebsite.Infrastructure;
 using SalesManagementWebsite.Infrastructure.UnitOfWork;
@@ -19,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddHttpClient();
 
 //Config JWT
 builder.Services.AddAuthentication(options =>
@@ -42,6 +44,7 @@ builder.Services.AddAuthentication(options =>
     });
 
 //Dependency Injection
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
 

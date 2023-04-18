@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.User;
+using SalesManagementWebsite.API.Services.UserServices;
 using SalesManagementWebsite.Contracts.Dtos.User;
 
 namespace SalesManagementWebsite.API.Controllers
@@ -16,10 +16,9 @@ namespace SalesManagementWebsite.API.Controllers
         }
 
         [HttpPost]
-        public async Task Register(UserRegisterDto userRegisterDto)
+        public async Task<UserOuputDto> Register(UserRegisterDto userRegisterDto)
         {
-            //Test user.name and user.email
-            await _userService.Register(userRegisterDto);
+            return await _userService.Register(userRegisterDto);
         }
     }
 }
