@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesManagementWebsite.API.Services.UserServices;
+using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
 
 namespace SalesManagementWebsite.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UserController : ControllerBase
+    [Route("api/user")]
+    [ApiController] 
+    public class UserController : Controller
     {
         public IUserService _userService { get; set; }
 
@@ -15,16 +16,14 @@ namespace SalesManagementWebsite.API.Controllers
             _userService = userService;
         }
 
-        [Route("/login")]
-        [HttpPost]
-        public async Task<UserOuputDto> Login(UserLoginDto userLoginDto)
+        [HttpPost("login")]
+        public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
         {
             return await _userService.Login(userLoginDto);
         }
 
-        [Route("/register")]
-        [HttpPost]
-        public async Task<UserOuputDto> Register(UserRegisterDto userRegisterDto)
+        [HttpPost("register")]
+        public async Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
             return await _userService.Register(userRegisterDto);
         }

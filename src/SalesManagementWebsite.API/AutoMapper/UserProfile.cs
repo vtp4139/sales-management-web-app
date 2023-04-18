@@ -11,6 +11,8 @@ namespace SalesManagementWebsite.API.AutoMapper
             CreateMap<UserLoginDto, User>();
 
             CreateMap<UserRegisterDto, User>();
+
+            CreateMap<User, UserOuputDto>();
         }
     }
 }
