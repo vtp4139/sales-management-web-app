@@ -15,6 +15,14 @@ namespace SalesManagementWebsite.API.Controllers
             _userService = userService;
         }
 
+        [Route("/login")]
+        [HttpPost]
+        public async Task<UserOuputDto> Login(UserLoginDto userLoginDto)
+        {
+            return await _userService.Login(userLoginDto);
+        }
+
+        [Route("/register")]
         [HttpPost]
         public async Task<UserOuputDto> Register(UserRegisterDto userRegisterDto)
         {

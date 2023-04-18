@@ -8,6 +8,8 @@ namespace SalesManagementWebsite.API.AutoMapper
     {
         public UserProfile() 
         {
+            CreateMap<UserLoginDto, User>();
+
             CreateMap<UserRegisterDto, User>();
         }
     }
