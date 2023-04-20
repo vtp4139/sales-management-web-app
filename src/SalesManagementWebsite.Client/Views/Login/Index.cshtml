@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml"; //Using layout for login only
 }
 
 <div class="container pt-5 pb-5 bg-white shadow rounded">
@@ -10,13 +10,11 @@
 
         <!-- Image Product -->
         <div class="col-md-5 border-end">
-            <span class="float-end pe-4">
-                <img src="images/product.png" alt="Product" width="350" height="350">
-            </span>
+            <img src="images/product.png" alt="Product" width="350" height="350" class="img-fluid mx-auto d-block"> <!-- img-fluid: responsive image -->
         </div>
 
         <!-- Login Form -->
-        <div class="col-md-5 pt-5">
+        <div class="col-md-5 pt-5 mx-auto d-block">
             <h1 class="fw-light">Đăng Nhập</h1>
             <p class="pb-2 fs-5 border-bottom fw-light">Hệ thống quản lý bán hàng</p>
 
@@ -41,6 +39,8 @@
                     <input asp-for="Password" class="form-control" placeholder="Password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
+
+                <!-- Footer of form -->
                 <p class="fw-light text-end">Quên mật khẩu?</p>  <!-- Todo -->
                 <div class="form-group d-grid gap-2 pb-5">
                     <input type="submit" value="Đăng Nhập" class="btn btn-primary btn-lg" />
@@ -49,4 +49,5 @@
         </div>
     </div>
 </div>
+
 

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using NToastNotify;
 using SalesManagementWebsite.Client.Services.API;
 using SalesManagementWebsite.Client.Services.Intefaces;
 
@@ -10,6 +11,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IUserService, UserService>();
+
+//Use Notify
+builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
+{
+    ProgressBar = true,
+    Timeout = 5000,
+});
 
 var app = builder.Build();
 
@@ -27,6 +35,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseNToastNotify();
 
 app.MapControllerRoute(
     name: "default",
