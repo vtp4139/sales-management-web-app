@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using SalesManagementWebsite.Client.Services.Intefaces;
 using SalesManagementWebsite.Contracts.Dtos.User;
+using System.Security.Claims;
 
 namespace SalesManagementWebsite.Client.Controllers
 {
@@ -18,6 +21,9 @@ namespace SalesManagementWebsite.Client.Controllers
 
         public ActionResult Index()
         {
+            //if user is login, redirect to home page
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -26,12 +32,33 @@ namespace SalesManagementWebsite.Client.Controllers
         public async Task<ActionResult> Login(UserLoginDto userLoginDto)
         {
             var res = await _userService.Login(userLoginDto);
-            
+
             if (!res.IsSuccess)
             {
                 _toastNotification.AddErrorToastMessage("Tên đăng nhập hoặc mật khẩu không khả dụng!");
                 return RedirectToAction("Index");
             }
+
+            //Add claim to gen authentication
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, res.Data.UserName),
+                new Claim("FullName", res.Data.Name),
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
+            };
+
+            await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity), authProperties);
+
             return RedirectToAction("Index", "Home");
         }
     }
