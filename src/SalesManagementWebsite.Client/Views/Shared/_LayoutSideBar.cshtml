@@ -1,10 +1,14 @@
 ﻿<!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <title> Drop Down Sidebar Menu | CodingLab </title>
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+    <!-- Apply CSS -->
+    <link rel="stylesheet" href="~/css/styleSideBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+
     <!-- Boxiocns CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,6 +119,8 @@
                     <li><a class="link_name" href="#">Setting</a></li>
                 </ul>
             </li>
+
+            <!-- Profile Details -->
             <li>
                 <div class="profile-details">
                     <div class="profile-content">
@@ -124,7 +130,7 @@
                         <div class="profile_name">Prem Shahi</div>
                         <div class="job">Web Desginer</div>
                     </div>
-                    <i class='bx bx-log-out'></i>
+                    <a asp-controller="Login" asp-action="Logout"><i class='bx bx-log-out'></i></a>  <!-- Log out -->
                 </div>
             </li>
         </ul>
@@ -142,7 +148,7 @@
         </main>
     </div>
 
-    <script src="~/js/script.js"></script>
+    <script src="~/js/scriptSideBar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -62,5 +62,14 @@ namespace SalesManagementWebsite.Client.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<ActionResult> Logout()
+        {
+            // Clear the existing external cookie
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index");
+        }
     }
 }
