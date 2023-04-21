@@ -1,0 +1,44 @@
+﻿@model SalesManagementWebsite.Contracts.Dtos.User.UserLoginDto
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml"; //Using layout for login only
+}
+
+<div class="container pt-5 pb-5 bg-white shadow rounded">
+    <div class="row">
+
+        <!-- Image Product -->
+        <div class="col-md-5 border-end">
+            <img src="images/product.png" alt="Product" width="350" height="350" class="img-fluid mx-auto d-block"> <!-- img-fluid: responsive image -->
+        </div>
+
+        <!-- Login Form -->
+        <div class="col-md-5 pt-5 mx-auto d-block">
+            <h1 class="fw-light">Đăng Nhập</h1>
+            <p class="pb-2 fs-5 border-bottom fw-light">Hệ thống quản lý bán hàng</p>
+
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="UserName" id="floatingInput" class="form-control" placeholder="Username"/>
+                    <label for="floatingInput"><i class="fa-solid fa-user pe-2"></i>Tên Đăng Nhập</label>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Password" class="form-control" placeholder="Password" />
+                    <label for="floatingInput"><i class="fa-solid fa-lock pe-2"></i>Mật Khẩu</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <!-- Footer of form -->
+                <p class="fw-light text-end">Quên mật khẩu?</p>  <!-- Todo -->
+                <div class="form-group d-grid gap-2 pb-5">
+                    <input type="submit" value="Đăng Nhập" class="btn btn-primary btn-lg" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

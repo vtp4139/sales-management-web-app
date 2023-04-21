@@ -1,0 +1,27 @@
+﻿ <!--  
+     Layout using for login
+     => Do not have Header (nav) and footer
+     => Show only login form
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/SalesManagementWebsite.Client.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+</head>
+<body class=" bg-light">
+    <div class="container pt-5">
+        <main role="main" class="pb-3 pt-5">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

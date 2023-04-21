@@ -5,11 +5,13 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.API", "SalesManagementWebsite.API\SalesManagementWebsite.API.csproj", "{00DEE355-E8AF-45EC-AF0E-97424E56A719}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManagementWebsite.Domain", "SalesManagementWebsite.Domain\SalesManagementWebsite.Domain.csproj", "{217B6F56-2C7C-414B-8BCC-4925A81A7E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Domain", "SalesManagementWebsite.Domain\SalesManagementWebsite.Domain.csproj", "{217B6F56-2C7C-414B-8BCC-4925A81A7E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManagementWebsite.Infrastructure", "SalesManagementWebsite.Infrastructure\SalesManagementWebsite.Infrastructure.csproj", "{3339F363-4F7D-4EE5-865A-87C0076286DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Infrastructure", "SalesManagementWebsite.Infrastructure\SalesManagementWebsite.Infrastructure.csproj", "{3339F363-4F7D-4EE5-865A-87C0076286DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManagementWebsite.Contracts", "SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj", "{BEC08C40-34EF-461F-9F5D-0A28B3A66EC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Contracts", "SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj", "{BEC08C40-34EF-461F-9F5D-0A28B3A66EC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManagementWebsite.Client", "SalesManagementWebsite.Client\SalesManagementWebsite.Client.csproj", "{F893FF25-0897-4BC0-9B4A-61E48209A525}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BEC08C40-34EF-461F-9F5D-0A28B3A66EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEC08C40-34EF-461F-9F5D-0A28B3A66EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEC08C40-34EF-461F-9F5D-0A28B3A66EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F893FF25-0897-4BC0-9B4A-61E48209A525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F893FF25-0897-4BC0-9B4A-61E48209A525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F893FF25-0897-4BC0-9B4A-61E48209A525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F893FF25-0897-4BC0-9B4A-61E48209A525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

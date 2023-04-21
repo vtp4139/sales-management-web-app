@@ -3,9 +3,9 @@ using SalesManagementWebsite.Domain.Repositories;
 
 namespace SalesManagementWebsite.Infrastructure.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
-        public UserRepository(SalesManagementDBContext dbContext) : base(dbContext)
+        public CategoryRepository(SalesManagementDBContext dbContext) : base(dbContext)
         {
         }
     }
