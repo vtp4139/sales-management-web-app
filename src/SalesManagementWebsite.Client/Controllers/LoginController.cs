@@ -44,6 +44,7 @@ namespace SalesManagementWebsite.Client.Controllers
             {
                 new Claim(ClaimTypes.Name, res.Data.UserName),
                 new Claim("FullName", res.Data.Name),
+                new Claim("Token", res.Data.Token),
             };
 
             var claimsIdentity = new ClaimsIdentity(
