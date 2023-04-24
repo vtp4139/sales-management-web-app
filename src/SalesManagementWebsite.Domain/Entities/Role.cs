@@ -1,10 +1,10 @@
 ﻿
 namespace SalesManagementWebsite.Domain.Entities
 {
-    public class Brand : BaseModel
+    public class Role : BaseModel
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public virtual List<Item> Items { get; set; } = new List<Item>();
+        public virtual List<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

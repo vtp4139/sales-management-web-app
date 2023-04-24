@@ -22,12 +22,12 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="UserName" id="floatingInput" class="form-control" placeholder="Username"/>
-                    <label for="floatingInput"><i class="fa-solid fa-user pe-2"></i>Tên Đăng Nhập</label>
+                    <label for="floatingInput" class="fw-light"><i class="fa-solid fa-user pe-2"></i>Tên Đăng Nhập</label>
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
                     <input asp-for="Password" class="form-control" placeholder="Password" />
-                    <label for="floatingInput"><i class="fa-solid fa-lock pe-2"></i>Mật Khẩu</label>
+                    <label for="floatingInput" class="fw-light"><i class="fa-solid fa-lock pe-2"></i>Mật Khẩu</label>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 

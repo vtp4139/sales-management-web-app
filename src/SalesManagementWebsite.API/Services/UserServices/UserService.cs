@@ -55,15 +55,20 @@ namespace SalesManagementWebsite.API.Services.UserServices
 
                 //Gen JWT Token
                 var token = TokenHelper.GenerateToken(
-              _configuration["JWT:Secret"]
-              , _configuration["JWT:ValidIssuer"]
-              , _configuration["JWT:ValidAudience"]
-              , null
-              , userLogin.Id.ToString()
-              , userLogin.UserName
-              , userLogin.Name);
+                      _configuration["JWT:Secret"]
+                      , _configuration["JWT:ValidIssuer"]
+                      , _configuration["JWT:ValidAudience"]
+                      , userLogin.UserRoles.Select(ur => ur.Roles.Name).ToList()
+                      , userLogin.Id.ToString()
+                      , userLogin.UserName
+                      , userLogin.Name); ;
 
+
+                var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
+
+                var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
                 var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
+                userOutput.Roles.AddRange(roleListOutput);
 
                 //Get token
                 userOutput.Token = token;

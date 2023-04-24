@@ -10,5 +10,6 @@ namespace SalesManagementWebsite.Domain.Entities
         public string Phone { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public virtual List<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

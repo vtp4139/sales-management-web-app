@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesManagementWebsite.Infrastructure;
 
@@ -11,9 +12,11 @@ using SalesManagementWebsite.Infrastructure;
 namespace SalesManagementWebsite.Infrastructure.Migrations
 {
     [DbContext(typeof(SalesManagementDBContext))]
-    partial class SalesManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230424075422_Update_User_Roles")]
+    partial class Update_User_Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,31 +119,6 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -195,22 +173,25 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UsersId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RolesId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Item", b =>
@@ -234,21 +215,9 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.UserRole", b =>
                 {
-                    b.HasOne("SalesManagementWebsite.Domain.Entities.Role", "Roles")
+                    b.HasOne("SalesManagementWebsite.Domain.Entities.User", null)
                         .WithMany("UserRoles")
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SalesManagementWebsite.Domain.Entities.User", "Users")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Roles");
-
-                    b.Navigation("Users");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Brand", b =>
@@ -259,11 +228,6 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.User", b =>

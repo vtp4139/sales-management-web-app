@@ -43,6 +43,7 @@ namespace SalesManagementWebsite.Client.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, res.Data.UserName),
+                new Claim(ClaimTypes.Role, res.Data.Roles.First().Name),
                 new Claim("FullName", res.Data.Name),
                 new Claim("Token", res.Data.Token),
             };

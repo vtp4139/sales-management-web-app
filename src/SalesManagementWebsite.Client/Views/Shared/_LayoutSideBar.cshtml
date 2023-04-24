@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -127,10 +128,14 @@
                         <img src="image/profile.jpg" alt="profileImg">
                     </div>
                     <div class="name-job">
-                        <div class="profile_name">Prem Shahi</div>
-                        <div class="job">Web Desginer</div>
+                        <div class="profile_name">
+                            @Context.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value <!-- User Name -->
+                        </div>
+                        <div class="job">
+                            @Context.User.FindFirst(ClaimTypes.Role).Value  <!-- User Role -->
+                        </div>
                     </div>
-                    <a asp-controller="Login" asp-action="Logout"><i class='bx bx-log-out'></i></a>  <!-- Log out -->
+                    <a asp-controller="Login" asp-action="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>  <!-- Log out -->
                 </div>
             </li>
         </ul>
