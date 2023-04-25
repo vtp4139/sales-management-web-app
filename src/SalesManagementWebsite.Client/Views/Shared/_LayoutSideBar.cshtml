@@ -124,36 +124,42 @@
             <!-- Profile Details -->
             <li>
                 <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="image/profile.jpg" alt="profileImg">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">
-                            @Context.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value <!-- User Name -->
+                    <a asp-controller="User" asp-action="UserInfo">
+                        <!-- To Url User info -->
+                        <div class="profile-content">
+                            <img src="image/profile.jpg" alt="profileImg">
                         </div>
-                        <div class="job">
-                            @Context.User.FindFirst(ClaimTypes.Role).Value  <!-- User Role -->
+                        <div class="name-job">
+                            <div class="profile_name">
+                                @Context.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value <!-- User Name -->
+                            </div>
+                            <div class="job">
+                                @Context.User.FindFirst(ClaimTypes.Role).Value  <!-- User Role -->
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <a asp-controller="Login" asp-action="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>  <!-- Log out -->
                 </div>
             </li>
         </ul>
     </div>
+
+    <!-- Home body -->
     <section class="home-section">
         <div class="home-content">
             <i class='bx bx-menu'></i>
             <span class="text">Drop Down Sidebar</span>
         </div>
+        @RenderBody()
     </section>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
     <script src="~/js/scriptSideBar.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @{
+        await RenderSectionAsync("Scripts", required: false);
+        RenderSection("styles", false);
+        await Component.InvokeAsync("NToastNotify");
+    }
 </body>
 </html>
