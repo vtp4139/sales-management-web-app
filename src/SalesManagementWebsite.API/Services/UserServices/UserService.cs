@@ -129,7 +129,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = "Can not get the info of user"
+                        ErrorMessage = $"Can not get the info of user: {userName}"
                     };
                 }
 
