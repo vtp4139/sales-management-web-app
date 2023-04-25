@@ -8,20 +8,21 @@ namespace SalesManagementWebsite.API.Services.JWTServices
     public static class TokenHelper
     {
         public static string GenerateToken(string jwtSecret, string issuer, string audience
-            , IList<string> userRoles, string id, string userName, string fullName)
+            , List<string> userRoles, string id, string userName, string fullName)
         {
             List<Claim> authClaims = new();
-            //List<Claim> claimRoles = userRoles.Select(s => new Claim(AppJwtClaimTypes.Roles, s)).ToList();
+            List<Claim> claimRoles = userRoles.Select(s => new Claim(AppJwtClaimTypes.Roles, s)).ToList();
 
             authClaims.AddRange(new List<Claim>
-        {
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString().ToLower()),
-            new(AppJwtClaimTypes.Subject, id.ToLower()),
-            new(AppJwtClaimTypes.UserName, userName),
-            new(AppJwtClaimTypes.FullName, fullName)
-        });
+            {
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString().ToLower()),
+                new(AppJwtClaimTypes.Subject, id.ToLower()),
+                new(AppJwtClaimTypes.UserName, userName),
+                new(AppJwtClaimTypes.FullName, fullName),
+                //new(AppJwtClaimTypes.Roles, userRoles)
+            });
 
-            //authClaims.AddRange(claimRoles);
+            authClaims.AddRange(claimRoles);
 
             SymmetricSecurityKey authSigningKey = new(Encoding.UTF8.GetBytes(jwtSecret));
 

@@ -25,8 +25,8 @@ namespace SalesManagementWebsite.API.Services.UserServices
         public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
         {
             try
-            {               
-                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userLoginDto.UserName)); 
+            {
+                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userLoginDto.UserName));
 
                 if (userLogin == null)
                 {
@@ -50,20 +50,25 @@ namespace SalesManagementWebsite.API.Services.UserServices
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
                         ErrorMessage = "Password is wrong, please try a new password!"
-                };
-            }
+                    };
+                }
 
                 //Gen JWT Token
                 var token = TokenHelper.GenerateToken(
-              _configuration["JWT:Secret"]
-              , _configuration["JWT:ValidIssuer"]
-              , _configuration["JWT:ValidAudience"]
-              , null
-              , userLogin.Id.ToString()
-              , userLogin.UserName
-              , userLogin.Name);
+                      _configuration["JWT:Secret"]
+                      , _configuration["JWT:ValidIssuer"]
+                      , _configuration["JWT:ValidAudience"]
+                      , userLogin.UserRoles.Select(ur => ur.Roles.Name).ToList()
+                      , userLogin.Id.ToString()
+                      , userLogin.UserName
+                      , userLogin.Name); ;
 
+
+                var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
+
+                var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
                 var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
+                userOutput.Roles.AddRange(roleListOutput);
 
                 //Get token
                 userOutput.Token = token;
@@ -96,6 +101,43 @@ namespace SalesManagementWebsite.API.Services.UserServices
                 await _unitOfWork.CommitAsync();
 
                 var userOutput = _mapper.Map<User, UserOuputDto>(user);
+
+                return new ResponseHandle<UserOuputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = userOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        {
+            try
+            {
+                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userName));
+
+                if (userLogin == null)
+                {
+                    return new ResponseHandle<UserOuputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get the info of user: {userName}"
+                    };
+                }
+
+                var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
+                var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
+                var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
+
+                userOutput.Roles.AddRange(roleListOutput);
 
                 return new ResponseHandle<UserOuputDto>
                 {

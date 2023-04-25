@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using SalesManagementWebsite.Client.Services.Intefaces;
@@ -43,6 +44,7 @@ namespace SalesManagementWebsite.Client.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, res.Data.UserName),
+                new Claim(ClaimTypes.Role, res.Data.Roles.First().Name),
                 new Claim("FullName", res.Data.Name),
                 new Claim("Token", res.Data.Token),
             };
@@ -61,6 +63,16 @@ namespace SalesManagementWebsite.Client.Controllers
                     new ClaimsPrincipal(claimsIdentity), authProperties);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<ActionResult> Logout()
+        {
+            // Clear the existing external cookie
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index");
         }
     }
 }

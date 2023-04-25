@@ -1,4 +1,5 @@
 ﻿using SalesManagementWebsite.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace SalesManagementWebsite.Domain.Repositories
 {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesManagementWebsite.Infrastructure;
 
@@ -11,16 +12,15 @@ using SalesManagementWebsite.Infrastructure;
 namespace SalesManagementWebsite.Infrastructure.Migrations
 {
     [DbContext(typeof(SalesManagementDBContext))]
-    partial class SalesManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230424080934_Update_User_Roles_v2")]
+    partial class Update_User_Roles_v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.5")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -141,7 +141,7 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.User", b =>
@@ -157,14 +157,7 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdentityCard")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -220,7 +213,7 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Item", b =>
