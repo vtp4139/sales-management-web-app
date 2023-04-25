@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using SalesManagementWebsite.Client.Services.Intefaces;
@@ -64,6 +65,7 @@ namespace SalesManagementWebsite.Client.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public async Task<ActionResult> Logout()
         {
             // Clear the existing external cookie

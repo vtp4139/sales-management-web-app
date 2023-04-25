@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SalesManagementWebsite.API.Services.UserServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
@@ -26,6 +27,13 @@ namespace SalesManagementWebsite.API.Controllers
         public async Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
             return await _userService.Register(userRegisterDto);
+        }
+
+        [Authorize]
+        [HttpGet("get-user/{userName}")]
+        public async Task<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        {
+            return await _userService.GetUser(userName);
         }
     }
 }

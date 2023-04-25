@@ -7,6 +7,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
     {
         public Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userRegisterDto);
         public Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto);
+        public Task<ResponseHandle<UserOuputDto>> GetUser(string userName);
 
     }
 }

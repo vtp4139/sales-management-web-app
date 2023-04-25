@@ -7,5 +7,6 @@ namespace SalesManagementWebsite.Client.Services.Intefaces
     {
         Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto);
         Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto);
+        Task<ResponseHandle<UserOuputDto>> GetUser();
     }
 }
