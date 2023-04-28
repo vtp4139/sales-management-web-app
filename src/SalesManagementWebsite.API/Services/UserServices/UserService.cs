@@ -133,10 +133,12 @@ namespace SalesManagementWebsite.API.Services.UserServices
                     };
                 }
 
+                //Get roles of uer
                 var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
                 var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
-                var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
 
+                //Map user and role to dto
+                var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
                 userOutput.Roles.AddRange(roleListOutput);
 
                 return new ResponseHandle<UserOuputDto>
@@ -144,6 +146,40 @@ namespace SalesManagementWebsite.API.Services.UserServices
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = userOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ResponseHandle<UsersListOuputDto>> GetAllUsers()
+        {
+            try
+            {
+                var userList = await _unitOfWork.UserRepository.GetAllAsync();
+
+                if (userList == null)
+                {
+                    return new ResponseHandle<UsersListOuputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get the list of user"
+                    };
+                }
+
+                var userListOutput = _mapper.Map<List<User>, List<UsersListOuputDto>>(userList.ToList());
+
+                return new ResponseHandle<UsersListOuputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = null,
+                    ListData = userListOutput,
                     ErrorMessage = string.Empty
                 };
             }
