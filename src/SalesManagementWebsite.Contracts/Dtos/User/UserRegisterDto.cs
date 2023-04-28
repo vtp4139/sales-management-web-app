@@ -22,5 +22,9 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
+
+        public string IdentityCard { get; set; } = string.Empty;
+
+        public DateTime DOB { get; set; }
     }
 }

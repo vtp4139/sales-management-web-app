@@ -9,5 +9,6 @@ namespace SalesManagementWebsite.API.Services.UserServices
         public Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto);
         public Task<ResponseHandle<UserOuputDto>> GetUser(string userName);
         public Task<ResponseHandle<UsersListOuputDto>> GetAllUsers();
+        public Task<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto);
     }
 }

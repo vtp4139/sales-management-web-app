@@ -16,8 +16,8 @@ namespace SalesManagementWebsite.Infrastructure
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-         => optionsBuilder
-        .UseLazyLoadingProxies();
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // => optionsBuilder
+        //.UseLazyLoadingProxies();
     }
 }

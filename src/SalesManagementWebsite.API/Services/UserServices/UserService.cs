@@ -29,7 +29,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
         {
             try
             {
-                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userLoginDto.UserName));
+                var userLogin = await _unitOfWork.UserRepository.GetUser(userLoginDto.UserName);
 
                 if (userLogin == null)
                 {
@@ -194,6 +194,52 @@ namespace SalesManagementWebsite.API.Services.UserServices
             catch (Exception ex)
             {
                 _logger.LogError($"UserService -> GetAllUsers - Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
+            }
+        }
+
+        public async Task<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        {
+            try
+            {
+                var user = await _unitOfWork.UserRepository.GetUser(userInputDto.UserName);
+
+                if (user == null)
+                {
+                    return new ResponseHandle<UserOuputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get the info of user: {userInputDto.UserName}"
+                    };
+                }
+
+                //Mapping field modify
+                user.Name = userInputDto.Name;
+                user.Phone = userInputDto.Phone;
+                user.Address = userInputDto.Address;
+                user.Email = userInputDto.Email;
+                user.IdentityCard = userInputDto.IdentityCard;
+                user.DOB = userInputDto.DOB;
+
+                _unitOfWork.UserRepository.Update(user);
+                await _unitOfWork.CommitAsync();
+
+                var userOutput = _mapper.Map<User, UserOuputDto>(user);
+
+                return new ResponseHandle<UserOuputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = userOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"UserService -> Register({JsonSerializer.Serialize(userInputDto)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }

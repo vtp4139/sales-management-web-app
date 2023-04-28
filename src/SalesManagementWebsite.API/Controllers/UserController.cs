@@ -42,5 +42,11 @@ namespace SalesManagementWebsite.API.Controllers
         {
             return await _userService.GetAllUsers();
         }
+
+        [HttpPut("update-user")]
+        public async Task<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        {
+            return await _userService.UpdateUser(userInputDto);
+        }
     }
 }
