@@ -6,20 +6,23 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
+using System.Text.Json;
 
 namespace SalesManagementWebsite.API.Services.UserServices
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork _unitOfWork;
-        private IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<UserService> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
@@ -83,7 +86,9 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError($"UserService -> Login({JsonSerializer.Serialize(userLoginDto)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
             }
         }
 
@@ -112,7 +117,9 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError($"UserService -> Register({JsonSerializer.Serialize(registerDto)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
             }
         }
 
@@ -151,7 +158,8 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError($"UserService -> GetUser({userName}) - Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
             }
         }
 
@@ -185,7 +193,8 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError($"UserService -> GetAllUsers - Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
             }
         }
     }
