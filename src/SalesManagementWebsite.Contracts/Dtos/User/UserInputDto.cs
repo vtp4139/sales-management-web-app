@@ -2,13 +2,10 @@
 
 namespace SalesManagementWebsite.Contracts.Dtos.User
 {
-    public class UserRegisterDto
+    public class UserInputDto
     {
         [Required(ErrorMessage = "{0} is empty!")]
         public string UserName { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "{0} is empty!")]
-        public string Password { get; set; } = string.Empty;
 
         [StringLength(100, ErrorMessage = "{0} not over 100 char")]
         public string Name { get; set; } = string.Empty;
@@ -24,7 +21,10 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
         public string Email { get; set; } = string.Empty;
 
         public string IdentityCard { get; set; } = string.Empty;
+        public int StatusUser { get; set; }
 
         public DateTime DOB { get; set; }
+
+
     }
 }

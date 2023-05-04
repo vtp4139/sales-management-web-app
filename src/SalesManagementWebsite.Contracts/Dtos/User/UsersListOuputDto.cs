@@ -1,19 +1,14 @@
-﻿using SalesManagementWebsite.Domain.Enums;
-
-namespace SalesManagementWebsite.Domain.Entities
+﻿
+namespace SalesManagementWebsite.Contracts.Dtos.User
 {
-    public class User : BaseModel
+    public class UsersListOuputDto
     {
         public string UserName { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-        public byte[] Salt { get; set; } // Using to hash and compare password
         public string Name { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string IdentityCard { get; set; } = string.Empty;
-        public UserStatus UserStatus { get; set; }
         public DateTime DOB { get; set; }
-        public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }
