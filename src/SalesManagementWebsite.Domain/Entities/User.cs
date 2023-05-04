@@ -1,4 +1,5 @@
-﻿
+﻿using SalesManagementWebsite.Domain.Enums;
+
 namespace SalesManagementWebsite.Domain.Entities
 {
     public class User : BaseModel
@@ -11,6 +12,7 @@ namespace SalesManagementWebsite.Domain.Entities
         public string Address { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string IdentityCard { get; set; } = string.Empty;
+        public UserStatus UserStatus { get; set; }
         public DateTime DOB { get; set; }
         public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }

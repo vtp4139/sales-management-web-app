@@ -4,6 +4,7 @@ using SalesManagementWebsite.API.Services.JWTServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
+using SalesManagementWebsite.Domain.Enums;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
@@ -25,7 +26,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             _logger = logger;
         }
 
-        public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
         {
             try
             {
@@ -92,7 +93,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
         }
 
-        public async Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto registerDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto registerDto)
         {
             try
             {
@@ -123,7 +124,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
         }
 
-        public async Task<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        public async ValueTask<ResponseHandle<UserOuputDto>> GetUser(string userName)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
         }
 
-        public async Task<ResponseHandle<UsersListOuputDto>> GetAllUsers()
+        public async ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers()
         {
             try
             {
@@ -198,7 +199,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
         }
 
-        public async Task<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
         {
             try
             {
@@ -222,6 +223,47 @@ namespace SalesManagementWebsite.API.Services.UserServices
                 user.Email = userInputDto.Email;
                 user.IdentityCard = userInputDto.IdentityCard;
                 user.DOB = userInputDto.DOB;
+
+                _unitOfWork.UserRepository.Update(user);
+                await _unitOfWork.CommitAsync();
+
+                var userOutput = _mapper.Map<User, UserOuputDto>(user);
+
+                return new ResponseHandle<UserOuputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = userOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"UserService -> Register({JsonSerializer.Serialize(userInputDto)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
+            }
+        }
+
+        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto)
+        {
+            try
+            {
+                var user = await _unitOfWork.UserRepository.GetUser(userInputDto.UserName);
+
+                if (user == null)
+                {
+                    return new ResponseHandle<UserOuputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get the info of user: {userInputDto.UserName}"
+                    };
+                }
+
+                //Mapping field modify
+                user.UserStatus = (UserStatus) userInputDto.StatusUser; //-> Change status
 
                 _unitOfWork.UserRepository.Update(user);
                 await _unitOfWork.CommitAsync();

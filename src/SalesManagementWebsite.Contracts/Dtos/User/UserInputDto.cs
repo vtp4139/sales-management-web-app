@@ -21,6 +21,7 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
         public string Email { get; set; } = string.Empty;
 
         public string IdentityCard { get; set; } = string.Empty;
+        public int StatusUser { get; set; }
 
         public DateTime DOB { get; set; }
 

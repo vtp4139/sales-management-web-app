@@ -20,33 +20,39 @@ namespace SalesManagementWebsite.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
         {
             return await _userService.Login(userLoginDto);
         }
 
         [HttpPost("register")]
-        public async Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
             return await _userService.Register(userRegisterDto);
         }
 
         [HttpGet("get-user/{userName}")]
-        public async Task<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        public async ValueTask<ResponseHandle<UserOuputDto>> GetUser(string userName)
         {
             return await _userService.GetUser(userName);
         }
 
         [HttpGet("get-all-user")]
-        public async Task<ResponseHandle<UsersListOuputDto>> GetAllUsers()
+        public async ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers()
         {
             return await _userService.GetAllUsers();
         }
 
         [HttpPut("update-user")]
-        public async Task<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
         {
             return await _userService.UpdateUser(userInputDto);
+        }
+
+        [HttpPut("change-status-user")]
+        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto)
+        {
+            return await _userService.ChangeStatusUser(userInputDto);
         }
     }
 }
