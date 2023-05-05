@@ -11,7 +11,7 @@ namespace SalesManagementWebsite.API.Controllers
     [ApiController] 
     public class CategoryController : Controller, ICategoryServices
     {
-        public ICategoryServices _categoryServices { get; set; }
+        private ICategoryServices _categoryServices { get; set; }
 
         public CategoryController(ICategoryServices categoryServices)
         {

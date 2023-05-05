@@ -11,7 +11,7 @@ namespace SalesManagementWebsite.API.Controllers
     [ApiController] 
     public class ItemController : Controller, IItemServices
     {
-        public IItemServices _itemServices { get; set; }
+        private IItemServices _itemServices { get; set; }
 
         public ItemController(IItemServices itemServices)
         {
