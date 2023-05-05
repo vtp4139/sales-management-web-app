@@ -55,7 +55,9 @@ namespace SalesManagementWebsite.Infrastructure
 
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
-            => await _entitiySet.AsNoTracking().FirstOrDefaultAsync(expression, cancellationToken);
+            => await _entitiySet
+            .AsNoTracking()
+            .FirstOrDefaultAsync(expression, cancellationToken);
 
 
         public void Remove(T entity)

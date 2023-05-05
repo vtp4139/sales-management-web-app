@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using SalesManagementWebsite.API.Services.HashServices;
-using SalesManagementWebsite.API.Services.JWTServices;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
-using SalesManagementWebsite.Contracts.Dtos.User;
-using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace SalesManagementWebsite.API.Services.ItemServices

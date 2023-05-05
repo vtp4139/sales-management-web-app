@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 namespace SalesManagementWebsite.API.Controllers
 {
     [Authorize]
-    [Route("api/user")]
+    [Route("api/item")]
     [ApiController] 
     public class ItemController : Controller, IItemServices
     {
