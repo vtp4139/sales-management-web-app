@@ -78,16 +78,10 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("BrandId1")
+                    b.Property<Guid>("BrandId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CategoryId1")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -109,9 +103,9 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId1");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
                 });
@@ -227,13 +221,13 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                 {
                     b.HasOne("SalesManagementWebsite.Domain.Entities.Brand", "Brand")
                         .WithMany("Items")
-                        .HasForeignKey("BrandId1")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SalesManagementWebsite.Domain.Entities.Category", "Category")
                         .WithMany("Items")
-                        .HasForeignKey("CategoryId1")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

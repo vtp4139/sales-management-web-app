@@ -9,7 +9,9 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
     {
         private readonly SalesManagementDBContext _dbContext;
         private IUserRepository? _userRepository;
-
+        private IItemRepository? _itemRepository;
+        private ICategoryRepository? _categoryRepository;
+        private IBrandRepository? _brandRepository;
 
         public UnitOfWork(SalesManagementDBContext dbContext)
         {
@@ -22,6 +24,20 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
             get { return _userRepository = _userRepository ?? new UserRepository(_dbContext); }
         }
 
+        public IItemRepository ItemRepository
+        {
+            get { return _itemRepository = _itemRepository ?? new ItemRepository(_dbContext); }
+        }
+
+        public ICategoryRepository CategoryRepository
+        {
+            get { return _categoryRepository = _categoryRepository ?? new CategoryRepository(_dbContext); }
+        }
+
+        public IBrandRepository BrandRepository
+        {
+            get { return _brandRepository = _brandRepository ?? new BrandRepository(_dbContext); }
+        }
 
         public void Commit()
             => _dbContext.SaveChanges();

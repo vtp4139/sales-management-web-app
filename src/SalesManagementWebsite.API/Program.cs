@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SalesManagementWebsite.API.Services.BrandServices;
+using SalesManagementWebsite.API.Services.CategoryServices;
+using SalesManagementWebsite.API.Services.ItemServices;
 using SalesManagementWebsite.API.Services.UserServices;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using SalesManagementWebsite.Infrastructure;
@@ -77,6 +80,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
+builder.Services.AddTransient(typeof(IItemServices), typeof(ItemServices));
+builder.Services.AddTransient(typeof(ICategoryServices), typeof(CategoryServices));
+builder.Services.AddTransient(typeof(IBrandServices), typeof(BrandServices));
 
 var app = builder.Build();
 

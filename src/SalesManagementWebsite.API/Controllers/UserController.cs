@@ -11,7 +11,7 @@ namespace SalesManagementWebsite.API.Controllers
     [ApiController] 
     public class UserController : Controller, IUserService
     {
-        public IUserService _userService { get; set; }
+        private IUserService _userService { get; set; }
 
         public UserController(IUserService userService)
         {
@@ -25,6 +25,7 @@ namespace SalesManagementWebsite.API.Controllers
             return await _userService.Login(userLoginDto);
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {

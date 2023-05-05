@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesManagementWebsite.Domain;
+using System;
 using System.Linq.Expressions;
 
 
@@ -55,7 +56,9 @@ namespace SalesManagementWebsite.Infrastructure
 
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
-            => await _entitiySet.AsNoTracking().FirstOrDefaultAsync(expression, cancellationToken);
+            => await _entitiySet
+            .AsNoTracking()
+            .FirstOrDefaultAsync(expression, cancellationToken);
 
 
         public void Remove(T entity)
@@ -72,5 +75,11 @@ namespace SalesManagementWebsite.Infrastructure
 
         public void UpdateRange(IEnumerable<T> entities)
             => _dbContext.UpdateRange(entities);
+
+        public void AttachModify(T entities)
+        {
+            _dbContext.Attach(entities);
+            _dbContext.Entry(entities).State = EntityState.Modified;
+        }
     }
 }
