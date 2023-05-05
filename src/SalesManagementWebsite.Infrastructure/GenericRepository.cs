@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesManagementWebsite.Domain;
+using System;
 using System.Linq.Expressions;
 
 
@@ -74,5 +75,11 @@ namespace SalesManagementWebsite.Infrastructure
 
         public void UpdateRange(IEnumerable<T> entities)
             => _dbContext.UpdateRange(entities);
+
+        public void AttachModify(T entities)
+        {
+            _dbContext.Attach(entities);
+            _dbContext.Entry(entities).State = EntityState.Modified;
+        }
     }
 }

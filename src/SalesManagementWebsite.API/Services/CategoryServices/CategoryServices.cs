@@ -141,6 +141,7 @@ namespace SalesManagementWebsite.API.Services.CategoryServices
                 //Mapping field modify
                 gCategory.Name = categoryInputDto.Name;
                 gCategory.Description = categoryInputDto.Description;
+                gCategory.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.CategoryRepository.Update(gCategory);
                 await _unitOfWork.CommitAsync();

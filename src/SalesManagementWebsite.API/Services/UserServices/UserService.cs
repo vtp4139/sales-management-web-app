@@ -212,7 +212,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get the info of user: {userInputDto.UserName}"
+                        ErrorMessage = $"Can not get the info of [User]: {userInputDto.UserName}"
                     };
                 }
 
@@ -223,6 +223,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
                 user.Email = userInputDto.Email;
                 user.IdentityCard = userInputDto.IdentityCard;
                 user.DOB = userInputDto.DOB;
+                user.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.UserRepository.Update(user);
                 await _unitOfWork.CommitAsync();

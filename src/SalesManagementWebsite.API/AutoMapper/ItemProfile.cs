@@ -9,6 +9,7 @@ namespace SalesManagementWebsite.API.AutoMapper
         public ItemProfile()
         {
             CreateMap<ItemInputDto, Item>();
+            CreateMap<ItemCreateDto, Item>();
             CreateMap<Item, ItemOutputDto>();
         }
     }

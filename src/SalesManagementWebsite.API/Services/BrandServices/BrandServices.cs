@@ -142,6 +142,7 @@ namespace SalesManagementWebsite.API.Services.BrandServices
                 //Mapping field modify
                 gBrand.Name = BrandInputDto.Name;
                 gBrand.Description = BrandInputDto.Description;
+                gBrand.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.BrandRepository.Update(gBrand);
                 await _unitOfWork.CommitAsync();
