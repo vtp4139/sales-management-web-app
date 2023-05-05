@@ -280,7 +280,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                _logger.LogError($"UserService -> Register({JsonSerializer.Serialize(userInputDto)}) " +
+                _logger.LogError($"UserService -> ChangeStatusUser({JsonSerializer.Serialize(userInputDto)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }

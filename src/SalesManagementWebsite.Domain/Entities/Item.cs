@@ -8,11 +8,11 @@ namespace SalesManagementWebsite.Domain.Entities
         public decimal Price { get; set; }
 
         //Foreign key for Standard
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 
         //Foreign key for Standard
-        public int BrandId { get; set; }
+        public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
     }
 }
