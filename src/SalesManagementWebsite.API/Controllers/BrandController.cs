@@ -8,7 +8,7 @@ namespace SalesManagementWebsite.API.Controllers
 {
     //[Authorize]
     [Route("api/brand")]
-    [ApiController] 
+    [ApiController]
     public class BrandController : Controller, IBrandServices
     {
         private IBrandServices _brandServices { get; set; }
@@ -16,6 +16,12 @@ namespace SalesManagementWebsite.API.Controllers
         public BrandController(IBrandServices brandServices)
         {
             _brandServices = brandServices;
+        }
+
+        [HttpGet("get-all-brand")]
+        public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
+        {
+            return await _brandServices.GetAllBrands();
         }
 
         [HttpGet("get-brand")]

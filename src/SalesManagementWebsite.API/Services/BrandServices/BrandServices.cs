@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Brand;
+using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
@@ -23,28 +24,37 @@ namespace SalesManagementWebsite.API.Services.BrandServices
             _logger = logger;
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> CreateBrand(BrandCreateDto brandCreateDto)
+        public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
         {
             try
             {
-                var brand = _mapper.Map<Brand>(brandCreateDto);
+                var gBrandList = await _unitOfWork.BrandRepository.GetAllAsync();
 
-                _unitOfWork.BrandRepository.Add(brand);
-                await _unitOfWork.CommitAsync();
+                if (gBrandList == null)
+                {
+                    return new ResponseHandle<BrandOutputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get list category"
+                    };
+                }
 
-                var brandOutput = _mapper.Map<BrandOutputDto>(brand);
+                var cateListOutput = _mapper.Map<List<BrandOutputDto>>(gBrandList);
 
                 return new ResponseHandle<BrandOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
+                    Data = null,
+                    ListData = cateListOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> CreateBrand({JsonSerializer.Serialize(brandCreateDto)}) " +
+                _logger.LogError($"BrandServices -> GetAllCategories() " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
@@ -80,6 +90,33 @@ namespace SalesManagementWebsite.API.Services.BrandServices
             catch (Exception ex)
             {
                 _logger.LogError($"BrandServices -> GetBrand({JsonSerializer.Serialize(id)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
+            }
+        }
+
+        public async ValueTask<ResponseHandle<BrandOutputDto>> CreateBrand(BrandCreateDto brandCreateDto)
+        {
+            try
+            {
+                var brand = _mapper.Map<Brand>(brandCreateDto);
+
+                _unitOfWork.BrandRepository.Add(brand);
+                await _unitOfWork.CommitAsync();
+
+                var brandOutput = _mapper.Map<BrandOutputDto>(brand);
+
+                return new ResponseHandle<BrandOutputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = brandOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"BrandServices -> CreateBrand({JsonSerializer.Serialize(brandCreateDto)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }

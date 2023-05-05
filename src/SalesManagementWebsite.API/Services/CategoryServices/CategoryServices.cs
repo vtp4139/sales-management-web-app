@@ -22,29 +22,38 @@ namespace SalesManagementWebsite.API.Services.CategoryServices
             _configuration = configuration;
             _logger = logger;
         }
-
-        public async ValueTask<ResponseHandle<CategoryOutputDto>> CreateCategory(CategoryCreateDto categoryCreateDto)
+        
+        public async ValueTask<ResponseHandle<CategoryOutputDto>> GetAllCategories()
         {
             try
             {
-                var category = _mapper.Map<Category>(categoryCreateDto);
+                var gCategoryList = await _unitOfWork.CategoryRepository.GetAllAsync();
 
-                _unitOfWork.CategoryRepository.Add(category);
-                await _unitOfWork.CommitAsync();
+                if (gCategoryList == null)
+                {
+                    return new ResponseHandle<CategoryOutputDto>
+                    {
+                        IsSuccess = false,
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        Data = null,
+                        ErrorMessage = $"Can not get list category"
+                    };
+                }
 
-                var categoryOutput = _mapper.Map<CategoryOutputDto>(category);
+                var cateListOutput = _mapper.Map<List<CategoryOutputDto>>(gCategoryList);
 
                 return new ResponseHandle<CategoryOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = categoryOutput,
+                    Data = null,
+                    ListData = cateListOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"CategoryServices -> CreateCategory({JsonSerializer.Serialize(categoryCreateDto)}) " +
+                _logger.LogError($"CategoryServices -> GetAllCategories() " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
@@ -80,6 +89,33 @@ namespace SalesManagementWebsite.API.Services.CategoryServices
             catch (Exception ex)
             {
                 _logger.LogError($"CategoryServices -> GetCategory({JsonSerializer.Serialize(id)}) " +
+                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                throw;
+            }
+        }
+
+        public async ValueTask<ResponseHandle<CategoryOutputDto>> CreateCategory(CategoryCreateDto categoryCreateDto)
+        {
+            try
+            {
+                var category = _mapper.Map<Category>(categoryCreateDto);
+
+                _unitOfWork.CategoryRepository.Add(category);
+                await _unitOfWork.CommitAsync();
+
+                var categoryOutput = _mapper.Map<CategoryOutputDto>(category);
+
+                return new ResponseHandle<CategoryOutputDto>
+                {
+                    IsSuccess = true,
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Data = categoryOutput,
+                    ErrorMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"CategoryServices -> CreateCategory({JsonSerializer.Serialize(categoryCreateDto)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
