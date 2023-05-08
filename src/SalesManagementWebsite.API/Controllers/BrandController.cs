@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/brand")]
     [ApiController]
     public class BrandController : Controller, IBrandServices
@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.API.Controllers
             return await _brandServices.GetAllBrands();
         }
 
-        [HttpGet("get-brand")]
+        [HttpGet("get-brand/{id}")]
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetBrand(Guid id)
         {
             return await _brandServices.GetBrand(id);

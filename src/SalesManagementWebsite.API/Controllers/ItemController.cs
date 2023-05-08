@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/item")]
     [ApiController] 
     public class ItemController : Controller, IItemServices
@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.API.Controllers
             return await _itemServices.GetAllItems();
         }
 
-        [HttpGet("get-item")]
+        [HttpGet("get-item/{id}")]
         public async ValueTask<ResponseHandle<ItemOutputDto>> GetItem(Guid id)
         {
             return await _itemServices.GetItem(id);
