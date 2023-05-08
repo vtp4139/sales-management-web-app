@@ -26,5 +26,7 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
         public string IdentityCard { get; set; } = string.Empty;
 
         public DateTime DOB { get; set; }
+
+        public List<Guid> Roles { get; set; } = new List<Guid>();
     }
 }

@@ -37,7 +37,7 @@ namespace SalesManagementWebsite.API.Services.BrandServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get list category"
+                        ErrorMessage = $"Can not get list [Brands]"
                     };
                 }
 
@@ -54,7 +54,7 @@ namespace SalesManagementWebsite.API.Services.BrandServices
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> GetAllCategories() " +
+                _logger.LogError($"BrandServices -> GetAllBrands() " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }

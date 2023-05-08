@@ -6,6 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.Enums;
 using SalesManagementWebsite.Domain.UnitOfWork;
+using System.Data;
 using System.Net;
 using System.Text.Json;
 
@@ -62,13 +63,13 @@ namespace SalesManagementWebsite.API.Services.UserServices
                       _configuration["JWT:Secret"]
                       , _configuration["JWT:ValidIssuer"]
                       , _configuration["JWT:ValidAudience"]
-                      , userLogin.UserRoles.Select(ur => ur.Roles.Name).ToList()
+                      , userLogin.UserRoles.Select(ur => ur.Role.Name).ToList()
                       , userLogin.Id.ToString()
                       , userLogin.UserName
                       , userLogin.Name); ;
 
 
-                var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
+                var roleList = userLogin.UserRoles.Select(ur => ur.Role).ToList();
 
                 var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
                 var userOutput = _mapper.Map<User, UserOuputDto>(userLogin);
@@ -97,16 +98,25 @@ namespace SalesManagementWebsite.API.Services.UserServices
         {
             try
             {
-                var user = _mapper.Map<UserRegisterDto, User>(registerDto);
+                var user = _mapper.Map<User>(registerDto);
 
                 //Hash password when save to db
                 user.Salt = HashPasswordsHelper.GeneratedSalt();
                 user.Password = HashPasswordsHelper.HashPasswords(user.Password, user.Salt);
-
                 _unitOfWork.UserRepository.Add(user);
+              
+                //Add roles for user
+                foreach (var role in registerDto.Roles)
+                {
+                    _unitOfWork.UserRoleRepository.Add(new UserRole
+                    {
+                        UserId = user.Id,
+                        RoleId = role
+                    });
+                }
                 await _unitOfWork.CommitAsync();
 
-                var userOutput = _mapper.Map<User, UserOuputDto>(user);
+                var userOutput = _mapper.Map<UserOuputDto>(user);
 
                 return new ResponseHandle<UserOuputDto>
                 {
@@ -142,7 +152,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
                 }
 
                 //Get roles of uer
-                var roleList = userLogin.UserRoles.Select(ur => ur.Roles).ToList();
+                var roleList = userLogin.UserRoles.Select(ur => ur.Role).ToList();
                 var roleListOutput = _mapper.Map<List<Role>, List<UserRoleDto>>(roleList);
 
                 //Map user and role to dto
@@ -264,7 +274,7 @@ namespace SalesManagementWebsite.API.Services.UserServices
                 }
 
                 //Mapping field modify
-                user.UserStatus = (UserStatus) userInputDto.StatusUser; //-> Change status
+                user.UserStatus = (UserStatus)userInputDto.StatusUser; //-> Change status
 
                 _unitOfWork.UserRepository.Update(user);
                 await _unitOfWork.CommitAsync();
