@@ -1,9 +1,15 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SalesManagementWebsite.Domain.Entities
 {
     public class UserRole : BaseModel
     {
-        public User Users { get; set; } = new User();
-        public Role Roles { get; set; } = new Role();
+        [ForeignKey("User")]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+
+        [ForeignKey("Role")]
+        public Guid RoleId { get; set; }
+        public Role Role { get; set; } 
     }
 }

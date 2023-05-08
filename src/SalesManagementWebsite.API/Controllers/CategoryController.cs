@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/category")]
     [ApiController] 
     public class CategoryController : Controller, ICategoryServices
@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.API.Controllers
             return await _categoryServices.GetAllCategories();
         }
 
-        [HttpGet("get-category")]
+        [HttpGet("get-category/{id}")]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetCategory(Guid id)
         {
             return await _categoryServices.GetCategory(id);

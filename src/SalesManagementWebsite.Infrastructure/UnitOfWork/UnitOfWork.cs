@@ -1,5 +1,4 @@
-﻿using SalesManagementWebsite.Domain;
-using SalesManagementWebsite.Domain.Repositories;
+﻿using SalesManagementWebsite.Domain.Repositories;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using SalesManagementWebsite.Infrastructure.Repositories;
 
@@ -12,6 +11,7 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         private IItemRepository? _itemRepository;
         private ICategoryRepository? _categoryRepository;
         private IBrandRepository? _brandRepository;
+        private IUserRoleRepository? _userRoleRepository;
 
         public UnitOfWork(SalesManagementDBContext dbContext)
         {
@@ -37,6 +37,11 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         public IBrandRepository BrandRepository
         {
             get { return _brandRepository = _brandRepository ?? new BrandRepository(_dbContext); }
+        }
+
+        public IUserRoleRepository UserRoleRepository
+        {
+            get { return _userRoleRepository = _userRoleRepository ?? new UserRoleRepository(_dbContext); }
         }
 
         public void Commit()

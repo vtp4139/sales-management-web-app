@@ -15,7 +15,7 @@ namespace SalesManagementWebsite.Infrastructure.Repositories
            return await _dbContext.Users
                         .AsNoTracking()
                         .Include(roles => roles.UserRoles)
-                        .ThenInclude(roles => roles.Roles)
+                        .ThenInclude(roles => roles.Role)
                         .FirstOrDefaultAsync(u => u.UserName.Equals(userName));
         }
     }
