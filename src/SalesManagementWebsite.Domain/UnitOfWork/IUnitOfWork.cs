@@ -9,6 +9,7 @@ namespace SalesManagementWebsite.Domain.UnitOfWork
         ICategoryRepository CategoryRepository { get; }
         IBrandRepository BrandRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
         void Commit();
         void Rollback();
         Task CommitAsync();
