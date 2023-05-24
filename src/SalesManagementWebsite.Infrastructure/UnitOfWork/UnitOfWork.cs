@@ -12,6 +12,7 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         private ICategoryRepository? _categoryRepository;
         private IBrandRepository? _brandRepository;
         private IUserRoleRepository? _userRoleRepository;
+        private ICustomerRepository? _customerRepository;
 
         public UnitOfWork(SalesManagementDBContext dbContext)
         {
@@ -42,6 +43,11 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         public IUserRoleRepository UserRoleRepository
         {
             get { return _userRoleRepository = _userRoleRepository ?? new UserRoleRepository(_dbContext); }
+        }
+
+        public ICustomerRepository CustomerRepository
+        {
+            get { return _customerRepository = _customerRepository ?? new CustomerRepository(_dbContext); }
         }
 
         public void Commit()
