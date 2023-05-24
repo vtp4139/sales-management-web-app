@@ -133,7 +133,7 @@ namespace SalesManagementWebsite.API.Services.CustomerServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get the [Item]: {JsonSerializer.Serialize(customerInputDto)}"
+                        ErrorMessage = $"Can not get the [Customer]: {JsonSerializer.Serialize(customerInputDto)}"
                     };
                 }
 
