@@ -15,5 +15,6 @@ namespace SalesManagementWebsite.Domain.Entities
         public UserStatus UserStatus { get; set; }
         public DateTime DOB { get; set; }
         public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public List<Order> Orders { get; set; } = new List<Order>();
     }
 }

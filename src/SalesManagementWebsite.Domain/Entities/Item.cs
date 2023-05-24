@@ -14,5 +14,7 @@ namespace SalesManagementWebsite.Domain.Entities
         //Foreign key for Standard
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
+
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }
