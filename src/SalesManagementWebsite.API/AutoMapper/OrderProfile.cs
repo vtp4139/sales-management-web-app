@@ -11,6 +11,8 @@ namespace SalesManagementWebsite.API.AutoMapper
             CreateMap<Order, OrderListOutputDto>();
             CreateMap<Order, OrderOutputDto>();
             CreateMap<OrderDetail, OrderDetailOutputDto>();
+            CreateMap<OrderInputDto, Order>().ForMember(x => x.OrderDetails, opt => opt.Ignore());
+            CreateMap<OrderDetailInputDto, OrderDetail>();         
         }
     }
 }

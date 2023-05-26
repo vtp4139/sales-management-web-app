@@ -1,0 +1,15 @@
+--Create Order JSON Payload
+
+{
+  "orderDate": "2023-05-26T09:06:44.533Z",
+  "userId": "1143A36C-E818-4C00-BE8B-08DB4D56C0C8",
+  "customerId": "D411FAE9-1109-4100-05C7-08DB5C451D39",
+  "orderDetails": [
+    {
+      "quantity": 10,
+      "unitPrice": 0,
+      "discount": 0,
+      "itemId": "ca1f7094-3830-4bbb-bcc3-a68cc034b287"
+    }
+  ]
+}

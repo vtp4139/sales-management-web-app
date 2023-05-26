@@ -1,7 +1,7 @@
 ﻿
 namespace SalesManagementWebsite.Contracts.Dtos.Order
 {
-    public class OrderDetailInputDto
+    public class OrderDetailOutputDto
     {
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }

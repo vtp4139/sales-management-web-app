@@ -8,5 +8,6 @@ namespace SalesManagementWebsite.API.Services.OrderServices
     {
         ValueTask<ResponseHandle<OrderListOutputDto>> GetAllOrders();
         ValueTask<ResponseHandle<OrderOutputDto>> GetOrder(Guid id);
+        ValueTask<ResponseHandle<OrderOutputDto>> CreateOrder(OrderInputDto orderCreateDto);
     }
 }
