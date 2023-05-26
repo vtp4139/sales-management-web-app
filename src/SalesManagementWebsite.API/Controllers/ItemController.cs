@@ -18,7 +18,7 @@ namespace SalesManagementWebsite.API.Controllers
             _itemServices = itemServices;
         }
 
-        [HttpGet("get-all-item")]
+        [HttpGet("get-all-items")]
         public async ValueTask<ResponseHandle<ItemOutputDto>> GetAllItems()
         {
             return await _itemServices.GetAllItems();

@@ -18,7 +18,7 @@ namespace SalesManagementWebsite.API.Controllers
             _brandServices = brandServices;
         }
 
-        [HttpGet("get-all-brand")]
+        [HttpGet("get-all-brands")]
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
         {
             return await _brandServices.GetAllBrands();

@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SalesManagementWebsite.API.Services.CustomerServices;
 using SalesManagementWebsite.Contracts.Dtos.Customer;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.API.Controllers
 {
-    //[Authorize]
-    [Route("api/brand")]
+    [Authorize]
+    [Route("api/customer")]
     [ApiController]
     public class CustomerController : Controller, ICustomerSevices
     {
@@ -17,7 +18,7 @@ namespace SalesManagementWebsite.API.Controllers
             _customerSevices = customerSevices;
         }
 
-        [HttpGet("get-all-customer")]
+        [HttpGet("get-all-customers")]
         public ValueTask<ResponseHandle<CustomerOuputDto>> GetAllCustomer()
         {
             return _customerSevices.GetAllCustomer();
