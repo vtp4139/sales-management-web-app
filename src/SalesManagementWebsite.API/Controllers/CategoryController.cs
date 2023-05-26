@@ -18,7 +18,7 @@ namespace SalesManagementWebsite.API.Controllers
             _categoryServices = categoryServices;
         }
 
-        [HttpGet("get-all-category")]
+        [HttpGet("get-all-categories")]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetAllCategories()
         {
             return await _categoryServices.GetAllCategories();

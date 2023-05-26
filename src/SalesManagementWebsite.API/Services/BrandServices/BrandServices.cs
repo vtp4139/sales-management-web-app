@@ -14,13 +14,11 @@ namespace SalesManagementWebsite.API.Services.BrandServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
 
-        public BrandServices(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<BrandServices> logger)
+        public BrandServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BrandServices> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _configuration = configuration;
             _logger = logger;
         }
 
@@ -41,14 +39,14 @@ namespace SalesManagementWebsite.API.Services.BrandServices
                     };
                 }
 
-                var cateListOutput = _mapper.Map<List<BrandOutputDto>>(gBrandList);
+                var brandListOutput = _mapper.Map<List<BrandOutputDto>>(gBrandList);
 
                 return new ResponseHandle<BrandOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = cateListOutput,
+                    ListData = brandListOutput,
                     ErrorMessage = string.Empty
                 };
             }

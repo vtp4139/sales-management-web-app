@@ -38,7 +38,7 @@ namespace SalesManagementWebsite.API.Controllers
             return await _userService.GetUser(userName);
         }
 
-        [HttpGet("get-all-user")]
+        [HttpGet("get-all-users")]
         public async ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers()
         {
             return await _userService.GetAllUsers();
