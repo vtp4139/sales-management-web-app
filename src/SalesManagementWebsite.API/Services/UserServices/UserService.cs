@@ -88,8 +88,9 @@ namespace SalesManagementWebsite.API.Services.UserServices
             }
             catch (Exception ex)
             {
-                _logger.LogError($"UserService -> Login({JsonSerializer.Serialize(userLoginDto)}) " +
-                                 $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
+                //Check using @(verbatim literals) and $(string interpolation)
+                _logger.LogError($@"UserService -> Login({JsonSerializer.Serialize(userLoginDto)} 
+                                    - Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }
