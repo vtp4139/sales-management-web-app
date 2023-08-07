@@ -8,5 +8,6 @@ namespace SalesManagementWebsite.Contracts.Dtos.Item
         public decimal Price { get; set; }
         public Guid CategoryId { get; set; }
         public Guid BrandId { get; set; }
+        public Guid SupplierId { get; set; }
     }
 }

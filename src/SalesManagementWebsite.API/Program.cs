@@ -9,6 +9,7 @@ using SalesManagementWebsite.API.Services.CustomerServices;
 using SalesManagementWebsite.API.Services.ItemServices;
 using SalesManagementWebsite.API.Services.KafkaServices;
 using SalesManagementWebsite.API.Services.OrderServices;
+using SalesManagementWebsite.API.Services.SupplierServices;
 using SalesManagementWebsite.API.Services.UserServices;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using SalesManagementWebsite.Infrastructure;
@@ -89,6 +90,7 @@ builder.Services.AddTransient(typeof(IBrandServices), typeof(BrandServices));
 builder.Services.AddTransient(typeof(ICustomerSevices), typeof(CustomerSevices));
 builder.Services.AddTransient(typeof(IOrderServices), typeof(OrderServices));
 builder.Services.AddTransient(typeof(IKafkaServices), typeof(KafkaServices));
+builder.Services.AddTransient(typeof(ISupplierServices), typeof(SupplierServices));
 
 var app = builder.Build();
 

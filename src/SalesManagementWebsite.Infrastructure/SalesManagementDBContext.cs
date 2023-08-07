@@ -17,6 +17,7 @@ namespace SalesManagementWebsite.Infrastructure
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         // => optionsBuilder

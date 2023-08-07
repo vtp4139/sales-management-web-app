@@ -12,6 +12,8 @@ namespace SalesManagementWebsite.Domain.UnitOfWork
         ICustomerRepository CustomerRepository { get; }
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
+        ISupplierRepository SupplierRepository { get; }
+
         void Commit();
         void Rollback();
         Task CommitAsync();

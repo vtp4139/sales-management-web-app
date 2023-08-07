@@ -14,13 +14,11 @@ namespace SalesManagementWebsite.API.Services.ItemServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
 
-        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<ItemServices> logger)
+        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemServices> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _configuration = configuration;
             _logger = logger;
         }
 

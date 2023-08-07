@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesManagementWebsite.Infrastructure;
 
@@ -11,9 +12,11 @@ using SalesManagementWebsite.Infrastructure;
 namespace SalesManagementWebsite.Infrastructure.Migrations
 {
     [DbContext(typeof(SalesManagementDBContext))]
-    partial class SalesManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230807035124_AddSuppliers")]
+    partial class AddSuppliers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,11 +148,16 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Items");
                 });
@@ -374,9 +382,17 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SalesManagementWebsite.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("Items")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Order", b =>
@@ -464,6 +480,11 @@ namespace SalesManagementWebsite.Infrastructure.Migrations
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.Supplier", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("SalesManagementWebsite.Domain.Entities.User", b =>

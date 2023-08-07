@@ -15,6 +15,7 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         private ICustomerRepository? _customerRepository;
         private IOrderRepository? _orderRepository;
         private IOrderDetailRepository? _orderDetailRepository;
+        private ISupplierRepository? _supplierRepository;
 
         public UnitOfWork(SalesManagementDBContext dbContext)
         {
@@ -60,6 +61,11 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         public IOrderDetailRepository OrderDetailRepository
         {
             get { return _orderDetailRepository = _orderDetailRepository ?? new OrderDetailRepository(_dbContext); }
+        }
+
+        public ISupplierRepository SupplierRepository
+        {
+            get { return _supplierRepository = _supplierRepository ?? new SupplierRepository(_dbContext); }
         }
 
         public void Commit()
