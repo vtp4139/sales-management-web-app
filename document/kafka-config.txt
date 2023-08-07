@@ -1,0 +1,28 @@
+*File config để chạy kafka ở local
+--------------------------------------------------------------------------
+Link download Kafka (cài bản bin): https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.9.0/apache-zookeeper-3.9.0-bin.tar.gz
+Link download Zookeeper (cài bản Binary - Scala): https://kafka.apache.org/downloads
+
+--------------------------------------------------------------------------
+Link cài đặt biến môi trường và set up cli: https://stackjava.com/apache-kafka/cai-dat-chay-apache-kafka-apache-zookeeper-tren-windows.html
+Các lệnh cli: https://www.conduktor.io/kafka/kafka-topics-cli-tutorial/
+
+--------------------------------------------------------------------------
+CÁCH KHỞI ĐỘNG KAFKA
+ - Di chuyển tới thư mục kafka bằng cách gõ “cd C:\app\kafka_2.12-1.1.0” và enter
+ - Start kafka server bằng cách chạy lệnh “.\bin\windows\kafka-server-start.bat .\config\server.properties”
+
+CÁCH KHỞI ĐỘNG ZOOKEPPER
+ - Vào thư mục bin
+ - Chạy zkserver
+
+--------------------------------------------------------------------------
+LỆNH THAO TÁC VỚI KAFKA
+ - Tạo topic: kafka-topics.bat --bootstrap-server localhost:9092 --topic item --create --partitions 3 --replication-factor 1
+ - Xem list topic: kafka-topics.bat --bootstrap-server localhost:9092 --list
+ - Lắng nghe message ở một topic: kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic item --from-beginning
+
+--------------------------------------------------------------------------
+MỘT VÀI LƯU Ý:
+ - Kafka sẽ chạy ở địa chỉ default là: localhost:9092 (khác với Zookeeper sẽ chạy ở: 2181)
+ - Chạy lên kafka ở đường dẫng dẫn: C:\app\kafka_2.13-3.5.1\bin\windows

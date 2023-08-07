@@ -10,11 +10,7 @@ namespace SalesManagementWebsite.API.Services.KafkaServices
         {
             var config = new ProducerConfig
             {
-                BootstrapServers = "",
-                SecurityProtocol = SecurityProtocol.SaslSsl,
-                SaslMechanism = SaslMechanism.Plain,
-                SaslUsername = "",
-                SaslPassword = "",  
+                BootstrapServers = "localhost:9092",
             };
 
             using (var producer = new ProducerBuilder<Null, string>(config).Build())
