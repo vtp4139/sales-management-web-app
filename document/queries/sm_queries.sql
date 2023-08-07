@@ -1,0 +1,7 @@
+--SELECT QUERIES
+---GET ID FOR ITEM
+SELECT * FROM Brands
+SELECT * FROM Categories
+SELECT * FROM Suppliers
+
+SELECT * FROM Items

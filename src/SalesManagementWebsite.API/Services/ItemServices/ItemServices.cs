@@ -14,13 +14,11 @@ namespace SalesManagementWebsite.API.Services.ItemServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
 
-        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<ItemServices> logger)
+        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemServices> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _configuration = configuration;
             _logger = logger;
         }
 
@@ -41,14 +39,14 @@ namespace SalesManagementWebsite.API.Services.ItemServices
                     };
                 }
 
-                var cateListOutput = _mapper.Map<List<ItemOutputDto>>(gItemList);
+                var itemListOutput = _mapper.Map<List<ItemOutputDto>>(gItemList);
 
                 return new ResponseHandle<ItemOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = cateListOutput,
+                    ListData = itemListOutput,
                     ErrorMessage = string.Empty
                 };
             }
@@ -145,6 +143,7 @@ namespace SalesManagementWebsite.API.Services.ItemServices
                 gItem.Price = itemInputDto.Price;
                 gItem.CategoryId = itemInputDto.CategoryId;
                 gItem.BrandId = itemInputDto.BrandId;
+                gItem.SupplierId = itemInputDto.SupplierId;
                 gItem.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.ItemRepository.Update(gItem);
