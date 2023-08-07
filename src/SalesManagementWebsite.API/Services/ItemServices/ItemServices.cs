@@ -39,14 +39,14 @@ namespace SalesManagementWebsite.API.Services.ItemServices
                     };
                 }
 
-                var cateListOutput = _mapper.Map<List<ItemOutputDto>>(gItemList);
+                var itemListOutput = _mapper.Map<List<ItemOutputDto>>(gItemList);
 
                 return new ResponseHandle<ItemOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = cateListOutput,
+                    ListData = itemListOutput,
                     ErrorMessage = string.Empty
                 };
             }
@@ -143,6 +143,7 @@ namespace SalesManagementWebsite.API.Services.ItemServices
                 gItem.Price = itemInputDto.Price;
                 gItem.CategoryId = itemInputDto.CategoryId;
                 gItem.BrandId = itemInputDto.BrandId;
+                gItem.SupplierId = itemInputDto.SupplierId;
                 gItem.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.ItemRepository.Update(gItem);
