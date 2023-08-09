@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------
 Link download Kafka (cài bản bin): https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.9.0/apache-zookeeper-3.9.0-bin.tar.gz
 Link download Zookeeper (cài bản Binary - Scala): https://kafka.apache.org/downloads
+Link Kafka cho .NET: https://docs.confluent.io/kafka-clients/dotnet/current/overview.html
 
 --------------------------------------------------------------------------
 Link cài đặt biến môi trường và set up cli: https://stackjava.com/apache-kafka/cai-dat-chay-apache-kafka-apache-zookeeper-tren-windows.html
@@ -20,9 +21,13 @@ CÁCH KHỞI ĐỘNG ZOOKEPPER
 LỆNH THAO TÁC VỚI KAFKA
  - Tạo topic: kafka-topics.bat --bootstrap-server localhost:9092 --topic item --create --partitions 3 --replication-factor 1
  - Xem list topic: kafka-topics.bat --bootstrap-server localhost:9092 --list
+ - Xóa một topic: kafka-topics.bat --bootstrap-server localhost:9092 --delete --topic first_topic
  - Lắng nghe message ở một topic: kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic item --from-beginning
+ - Procedure một message: kafka-console-producer.bat --bootstrap-server localhost:9092 --topic item
 
 --------------------------------------------------------------------------
 MỘT VÀI LƯU Ý:
  - Kafka sẽ chạy ở địa chỉ default là: localhost:9092 (khác với Zookeeper sẽ chạy ở: 2181)
  - Chạy lên kafka ở đường dẫng dẫn: C:\app\kafka_2.13-3.5.1\bin\windows
+ - Nếu lỡ xóa data ở file data Zookeeper phải tìm đến thứ mục tmp\kafka-logs\ xóa file meta.properties
+ - ERROR Shutdown broker because all log dirs in C:\tmp\kafka-logs have failed (kafka.log.LogManager) => xóa cả file bin của Zookeeper lẫn Kafka 
