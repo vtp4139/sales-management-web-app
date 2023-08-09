@@ -30,3 +30,4 @@ MỘT VÀI LƯU Ý:
  - Kafka sẽ chạy ở địa chỉ default là: localhost:9092 (khác với Zookeeper sẽ chạy ở: 2181)
  - Chạy lên kafka ở đường dẫng dẫn: C:\app\kafka_2.13-3.5.1\bin\windows
  - Nếu lỡ xóa data ở file data Zookeeper phải tìm đến thứ mục tmp\kafka-logs\ xóa file meta.properties
+ - ERROR Shutdown broker because all log dirs in C:\tmp\kafka-logs have failed (kafka.log.LogManager) => xóa cả file bin của Zookeeper lẫn Kafka 

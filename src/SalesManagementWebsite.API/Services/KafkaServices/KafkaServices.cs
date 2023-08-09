@@ -1,9 +1,7 @@
 ﻿using Confluent.Kafka;
-using Microsoft.Extensions.Logging;
 using SalesManagementWebsite.Contracts.Kafka;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Text.Json;
-using System.Threading;
 
 namespace SalesManagementWebsite.API.Services.KafkaServices
 {
