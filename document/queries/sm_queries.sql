@@ -5,3 +5,6 @@ SELECT * FROM Categories
 SELECT * FROM Suppliers
 
 SELECT * FROM Items
+
+SELECT * FROM Orders
+SELECT * FROM OrderDetails
