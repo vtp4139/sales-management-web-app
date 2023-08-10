@@ -3,7 +3,7 @@ using SalesManagementWebsite.Contracts.Kafka;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.KafkaServices
+namespace SalesManagementWebsite.Core.Services.KafkaServices
 {
     public class KafkaServices : IKafkaServices
     {

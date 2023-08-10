@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Customer;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Services.CustomerServices
+namespace SalesManagementWebsite.Core.Services.CustomerServices
 {
     public interface ICustomerSevices
     {

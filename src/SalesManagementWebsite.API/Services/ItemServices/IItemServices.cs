@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Services.ItemServices
+namespace SalesManagementWebsite.Core.Services.ItemServices
 {
     public interface IItemServices
     {

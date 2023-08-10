@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.CategoryServices;
+using SalesManagementWebsite.Core.Services.CategoryServices;
 using SalesManagementWebsite.Contracts.Dtos.Category;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
     [Route("api/category")]

@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.Category;
 using SalesManagementWebsite.Domain.Entities;
 
-namespace SalesManagementWebsite.API.AutoMapper
+namespace SalesManagementWebsite.Core.AutoMapper
 {
     public class CategoryProfile : Profile
     {

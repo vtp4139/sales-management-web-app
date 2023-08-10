@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.ItemServices;
+using SalesManagementWebsite.Core.Services.ItemServices;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
     [Route("api/item")]

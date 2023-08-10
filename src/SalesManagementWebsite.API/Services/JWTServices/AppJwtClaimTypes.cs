@@ -1,4 +1,4 @@
-﻿namespace SalesManagementWebsite.API.Services.JWTServices
+﻿namespace SalesManagementWebsite.Core.Services.JWTServices
 {
     public static class AppJwtClaimTypes
     {

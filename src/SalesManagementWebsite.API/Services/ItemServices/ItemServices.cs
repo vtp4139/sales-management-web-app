@@ -7,7 +7,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.ItemServices
+namespace SalesManagementWebsite.Core.Services.ItemServices
 {
     public class ItemServices : IItemServices
     {

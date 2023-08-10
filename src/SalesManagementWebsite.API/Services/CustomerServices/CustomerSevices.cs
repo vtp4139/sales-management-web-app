@@ -7,7 +7,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.CustomerServices
+namespace SalesManagementWebsite.Core.Services.CustomerServices
 {
     public class CustomerSevices : ICustomerSevices
     {

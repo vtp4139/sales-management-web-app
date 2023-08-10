@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
 
-namespace SalesManagementWebsite.API.AutoMapper
+namespace SalesManagementWebsite.Core.AutoMapper
 {
     public class UserProfile : Profile
     {

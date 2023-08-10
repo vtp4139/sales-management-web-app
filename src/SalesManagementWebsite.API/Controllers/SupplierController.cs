@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.SupplierServices;
+using SalesManagementWebsite.Core.Services.SupplierServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.Supplier;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     //[Authorize]
     [Route("api/supplier")]

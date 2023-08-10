@@ -7,7 +7,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.BrandServices
+namespace SalesManagementWebsite.Core.Services.BrandServices
 {
     public class BrandServices : IBrandServices
     {

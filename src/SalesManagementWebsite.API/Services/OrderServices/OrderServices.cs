@@ -6,7 +6,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.OrderServices
+namespace SalesManagementWebsite.Core.Services.OrderServices
 {
     public class OrderServices : IOrderServices
     {

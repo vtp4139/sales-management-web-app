@@ -6,7 +6,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.CategoryServices
+namespace SalesManagementWebsite.Core.Services.CategoryServices
 {
     public class CategoryServices : ICategoryServices
     {

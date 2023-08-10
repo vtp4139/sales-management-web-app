@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
 
-namespace SalesManagementWebsite.API.Services.UserServices
+namespace SalesManagementWebsite.Core.Services.UserServices
 {
     public interface IUserService
     {

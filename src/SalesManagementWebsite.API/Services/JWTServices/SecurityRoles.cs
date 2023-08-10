@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace SalesManagementWebsite.API.Services.JWTServices
+namespace SalesManagementWebsite.Core.Services.JWTServices
 {
     public class SecurityRoles
     {

@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Domain.Entities;
 
-namespace SalesManagementWebsite.API.AutoMapper
+namespace SalesManagementWebsite.Core.AutoMapper
 {
     public class ItemProfile : Profile
     {

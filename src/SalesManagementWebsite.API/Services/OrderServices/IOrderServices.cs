@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
 
-namespace SalesManagementWebsite.API.Services.OrderServices
+namespace SalesManagementWebsite.Core.Services.OrderServices
 {
     public interface IOrderServices
     {

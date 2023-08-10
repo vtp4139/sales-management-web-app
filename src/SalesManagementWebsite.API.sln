@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.API", "SalesManagementWebsite.API\SalesManagementWebsite.API.csproj", "{00DEE355-E8AF-45EC-AF0E-97424E56A719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Core", "SalesManagementWebsite.API\SalesManagementWebsite.Core.csproj", "{00DEE355-E8AF-45EC-AF0E-97424E56A719}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Domain", "SalesManagementWebsite.Domain\SalesManagementWebsite.Domain.csproj", "{217B6F56-2C7C-414B-8BCC-4925A81A7E3A}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Client", "SalesManagementWebsite.Client\SalesManagementWebsite.Client.csproj", "{F893FF25-0897-4BC0-9B4A-61E48209A525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManagementWebsite.Hangfire", "SalesManagementWebsite.Hangfire\SalesManagementWebsite.Hangfire.csproj", "{1374DEFC-823B-4823-B754-14C9533E7CA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManagementWebsite.Hangfire", "SalesManagementWebsite.Hangfire\SalesManagementWebsite.Hangfire.csproj", "{1374DEFC-823B-4823-B754-14C9533E7CA9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{21E22D87-F6BE-4091-838E-9CC8A34A7226}"
 EndProject

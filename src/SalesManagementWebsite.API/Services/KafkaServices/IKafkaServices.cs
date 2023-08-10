@@ -1,4 +1,4 @@
-﻿namespace SalesManagementWebsite.API.Services.KafkaServices
+﻿namespace SalesManagementWebsite.Core.Services.KafkaServices
 {
     public interface IKafkaServices
     {

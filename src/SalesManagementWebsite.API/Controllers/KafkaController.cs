@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.KafkaServices;
+using SalesManagementWebsite.Core.Services.KafkaServices;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     [Route("api/kafka")]
     [ApiController]

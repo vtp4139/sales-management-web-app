@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.Supplier;
 using SalesManagementWebsite.Domain.Entities;
 
-namespace SalesManagementWebsite.API.AutoMapper
+namespace SalesManagementWebsite.Core.AutoMapper
 {
     public class SupplierProfile : Profile
     {
