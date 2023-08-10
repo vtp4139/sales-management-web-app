@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

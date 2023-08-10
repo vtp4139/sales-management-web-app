@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using SalesManagementWebsite.Hangfire.Services;
 
 namespace SalesManagementWebsite.Hangfire.Controllers
 {
@@ -7,6 +8,13 @@ namespace SalesManagementWebsite.Hangfire.Controllers
     [ApiController]
     public class HangfireController : ControllerBase
     {
+        private IHangfireServices _hangfireServices;
+
+        public HangfireController(IHangfireServices hangfireServices)
+        {
+            _hangfireServices = hangfireServices;
+        }
+
         [HttpGet]
         [Route("executed-only-once")]
         public string ExecutedOnlyOnce()
@@ -46,6 +54,16 @@ namespace SalesManagementWebsite.Hangfire.Controllers
         {
             //Recurring Job - this job is executed many times on the specified cron schedule
             RecurringJob.AddOrUpdate("My Job", () => Console.WriteLine("Sent similar product offer and suuggestions"), cron);
+
+            return "Set Cron successfully!";
+        }
+
+        [HttpGet]
+        [Route("get-orders-job")]
+        public string GetOrdersJob(string cron)
+        {
+            //Recurring Job - this job is executed many times on the specified cron schedule
+            RecurringJob.AddOrUpdate("GetOrdersJob", () => _hangfireServices.GetOrders(), cron);
 
             return "Set Cron successfully!";
         }

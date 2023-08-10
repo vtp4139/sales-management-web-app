@@ -1,5 +1,6 @@
 using Hangfire;
 using Hangfire.SqlServer;
+using SalesManagementWebsite.Hangfire.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -15,6 +16,10 @@ GlobalConfiguration.Configuration.UseSqlServerStorage(defaultConnection, new Sql
 {            
     PrepareSchemaIfNecessary = true //Fix bug: Invalid object name 'HangFire.AggregatedCounter'.
 });
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddTransient(typeof(IHangfireServices), typeof(HangfireServices));
 
 builder.Services.AddHangfire(x =>
 {
