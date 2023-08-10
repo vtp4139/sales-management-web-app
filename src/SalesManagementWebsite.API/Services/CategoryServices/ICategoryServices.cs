@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Category;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Services.CategoryServices
+namespace SalesManagementWebsite.Core.Services.CategoryServices
 {
     public interface ICategoryServices
     {

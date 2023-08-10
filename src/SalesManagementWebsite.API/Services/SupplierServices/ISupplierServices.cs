@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.Supplier;
 
-namespace SalesManagementWebsite.API.Services.SupplierServices
+namespace SalesManagementWebsite.Core.Services.SupplierServices
 {
     public interface ISupplierServices
     {

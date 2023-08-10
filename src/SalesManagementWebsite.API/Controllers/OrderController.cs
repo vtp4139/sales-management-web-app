@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.OrderServices;
+using SalesManagementWebsite.Core.Services.OrderServices;
 using SalesManagementWebsite.Contracts.Dtos.Order;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     //[Authorize]
     [Route("api/order")]

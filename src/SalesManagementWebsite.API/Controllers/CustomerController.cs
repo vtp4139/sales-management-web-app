@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.CustomerServices;
+using SalesManagementWebsite.Core.Services.CustomerServices;
 using SalesManagementWebsite.Contracts.Dtos.Customer;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
     [Route("api/customer")]

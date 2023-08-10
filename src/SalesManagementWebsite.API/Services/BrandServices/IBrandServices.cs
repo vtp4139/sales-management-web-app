@@ -1,7 +1,7 @@
 ﻿using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Services.BrandServices
+namespace SalesManagementWebsite.Core.Services.BrandServices
 {
     public interface IBrandServices
     {

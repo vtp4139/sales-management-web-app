@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
-namespace SalesManagementWebsite.API.Services.HashServices
+namespace SalesManagementWebsite.Core.Services.HashServices
 {
     public static class HashPasswordsHelper
     {

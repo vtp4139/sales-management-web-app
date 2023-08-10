@@ -2,7 +2,7 @@
 using SalesManagementWebsite.Contracts.Dtos.Order;
 using SalesManagementWebsite.Domain.Entities;
 
-namespace SalesManagementWebsite.API.AutoMapper
+namespace SalesManagementWebsite.Core.AutoMapper
 {
     public class OrderProfile : Profile
     {

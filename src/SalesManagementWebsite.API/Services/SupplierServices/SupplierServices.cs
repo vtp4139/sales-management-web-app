@@ -6,7 +6,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.SupplierServices
+namespace SalesManagementWebsite.Core.Services.SupplierServices
 {
     public class SupplierServices : ISupplierServices
     {

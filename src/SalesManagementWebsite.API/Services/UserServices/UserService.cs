@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using SalesManagementWebsite.API.Services.HashServices;
-using SalesManagementWebsite.API.Services.JWTServices;
+using SalesManagementWebsite.Core.Services.HashServices;
+using SalesManagementWebsite.Core.Services.JWTServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
 using SalesManagementWebsite.Domain.Entities;
@@ -10,7 +10,7 @@ using System.Data;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.API.Services.UserServices
+namespace SalesManagementWebsite.Core.Services.UserServices
 {
     public class UserService : IUserService
     {

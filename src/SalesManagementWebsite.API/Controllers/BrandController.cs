@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesManagementWebsite.API.Services.BrandServices;
+using SalesManagementWebsite.Core.Services.BrandServices;
 using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 
-namespace SalesManagementWebsite.API.Controllers
+namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
     [Route("api/brand")]
