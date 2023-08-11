@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return _orderServices.GetAllOrders();
         }
 
-        [HttpGet("get-order/{id}")]
+        [HttpGet("get-order-by-id/{id}")]
         public ValueTask<ResponseHandle<OrderOutputDto>> GetOrder(Guid id)
         {
             return _orderServices.GetOrder(id);

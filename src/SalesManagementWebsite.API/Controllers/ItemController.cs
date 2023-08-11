@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _itemServices.GetAllItems();
         }
 
-        [HttpGet("get-item/{id}")]
+        [HttpGet("get-item-by-id/{id}")]
         public async ValueTask<ResponseHandle<ItemOutputDto>> GetItem(Guid id)
         {
             return await _itemServices.GetItem(id);

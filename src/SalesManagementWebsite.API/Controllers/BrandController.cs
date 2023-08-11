@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _brandServices.GetAllBrands();
         }
 
-        [HttpGet("get-brand/{id}")]
+        [HttpGet("get-brand-by-id/{id}")]
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetBrand(Guid id)
         {
             return await _brandServices.GetBrand(id);

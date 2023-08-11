@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _categoryServices.GetAllCategories();
         }
 
-        [HttpGet("get-category/{id}")]
+        [HttpGet("get-categoryget-by-id/{id}")]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetCategory(Guid id)
         {
             return await _categoryServices.GetCategory(id);

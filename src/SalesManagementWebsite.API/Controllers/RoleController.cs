@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _roleServices.GetAllRoles();
         }
 
-        [HttpGet("get-role/{id}")]
+        [HttpGet("get-role-by-id/{id}")]
         public async ValueTask<ResponseHandle<RoleOutputDto>> GetRole(Guid id)
         {
             return await _roleServices.GetRole(id);
