@@ -135,11 +135,11 @@ namespace SalesManagementWebsite.Core.Services.UserServices
             }
         }
 
-        public async ValueTask<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        public async ValueTask<ResponseHandle<UserOuputDto>> GetUserByUserName(string userName)
         {
             try
             {
-                var userLogin = await _unitOfWork.UserRepository.GetAsync(u => u.UserName.Equals(userName));
+                var userLogin = await _unitOfWork.UserRepository.GetUser(userName);
 
                 if (userLogin == null)
                 {

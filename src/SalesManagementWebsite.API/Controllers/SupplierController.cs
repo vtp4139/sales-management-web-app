@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _supplierServices.GetAllSuppliers();
         }
 
-        [HttpGet("get-supplier/{id}")]
+        [HttpGet("get-supplier-by-id/{id}")]
         public async ValueTask<ResponseHandle<SupplierOutputDto>> GetSupplier(Guid id)
         {
             return await _supplierServices.GetSupplier(id);

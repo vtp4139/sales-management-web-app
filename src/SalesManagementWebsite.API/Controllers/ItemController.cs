@@ -19,15 +19,15 @@ namespace SalesManagementWebsite.Core.Controllers
         }
 
         [HttpGet("get-all-items")]
-        public async ValueTask<ResponseHandle<ItemOutputDto>> GetAllItems()
+        public async ValueTask<ResponseHandle<ItemListDto>> GetAllItems()
         {
             return await _itemServices.GetAllItems();
         }
 
-        [HttpGet("get-item/{id}")]
-        public async ValueTask<ResponseHandle<ItemOutputDto>> GetItem(Guid id)
+        [HttpGet("get-item-by-id/{id}")]
+        public async ValueTask<ResponseHandle<ItemOutputDto>> GetItemById(Guid id)
         {
-            return await _itemServices.GetItem(id);
+            return await _itemServices.GetItemById(id);
         }
 
         [HttpPost("create-item")]

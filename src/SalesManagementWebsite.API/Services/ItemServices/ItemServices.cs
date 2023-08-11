@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Item;
-using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
@@ -22,15 +21,15 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
             _logger = logger;
         }
 
-        public async ValueTask<ResponseHandle<ItemOutputDto>> GetAllItems()
+        public async ValueTask<ResponseHandle<ItemListDto>> GetAllItems()
         {
             try
             {
-                var gItemList = await _unitOfWork.ItemRepository.GetAllAsync();
+                var items = await _unitOfWork.ItemRepository.GetAllAsync();
 
-                if (gItemList == null)
+                if (items == null)
                 {
-                    return new ResponseHandle<ItemOutputDto>
+                    return new ResponseHandle<ItemListDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
@@ -39,14 +38,14 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                     };
                 }
 
-                var itemListOutput = _mapper.Map<List<ItemOutputDto>>(gItemList);
+                var itemsOutput = _mapper.Map<List<ItemListDto>>(items);
 
-                return new ResponseHandle<ItemOutputDto>
+                return new ResponseHandle<ItemListDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = itemListOutput,
+                    ListData = itemsOutput,
                     ErrorMessage = string.Empty
                 };
             }
@@ -58,11 +57,11 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
             }
         }
 
-        public async ValueTask<ResponseHandle<ItemOutputDto>> GetItem(Guid id)
+        public async ValueTask<ResponseHandle<ItemOutputDto>> GetItemById(Guid id)
         {
             try
             {
-                var gItem = await _unitOfWork.ItemRepository.GetItem(id);
+                var gItem = await _unitOfWork.ItemRepository.GetItemById(id);
 
                 if (gItem == null)
                 {

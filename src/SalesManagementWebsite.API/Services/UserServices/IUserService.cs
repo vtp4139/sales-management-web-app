@@ -7,7 +7,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
     {
         public ValueTask<ResponseHandle<UserOuputDto>> Login(UserLoginDto userRegisterDto);
         public ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto);
-        public ValueTask<ResponseHandle<UserOuputDto>> GetUser(string userName);
+        public ValueTask<ResponseHandle<UserOuputDto>> GetUserByUserName(string userName);
         public ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers();
         public ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto);
         public ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto);

@@ -1,202 +1,200 @@
 ﻿using AutoMapper;
-using SalesManagementWebsite.Contracts.Dtos.Brand;
-using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Dtos.Role;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
 using System.Text.Json;
 
-namespace SalesManagementWebsite.Core.Services.BrandServices
+namespace SalesManagementWebsite.Core.Services.RoleServices
 {
-    public class BrandServices : IBrandServices
+    public class RoleServices : IRoleServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public BrandServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BrandServices> logger)
+        public RoleServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RoleServices> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
+        public async ValueTask<ResponseHandle<RoleOutputDto>> GetAllRoles()
         {
             try
             {
-                var gBrandList = await _unitOfWork.BrandRepository.GetAllAsync();
+                var roles = await _unitOfWork.RoleRepository.GetAllAsync();
 
-                if (gBrandList == null)
+                if (roles == null)
                 {
-                    return new ResponseHandle<BrandOutputDto>
+                    return new ResponseHandle<RoleOutputDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get list [Brands]"
+                        ErrorMessage = $"Can not get list [Roles]"
                     };
                 }
 
-                var brandListOutput = _mapper.Map<List<BrandOutputDto>>(gBrandList);
+                var rolesOutput = _mapper.Map<List<RoleOutputDto>>(roles);
 
-                return new ResponseHandle<BrandOutputDto>
+                return new ResponseHandle<RoleOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = brandListOutput,
+                    ListData = rolesOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> GetAllBrands() " +
+                _logger.LogError($"RoleServices -> GetAllRoles() " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> GetBrand(Guid id)
+        public async ValueTask<ResponseHandle<RoleOutputDto>> GetRole(Guid id)
         {
             try
             {
-                var gBrand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(id));
+                var role = await _unitOfWork.RoleRepository.GetAsync(c => c.Id.Equals(id));
 
-                if (gBrand == null)
+                if (role == null)
                 {
-                    return new ResponseHandle<BrandOutputDto>
+                    return new ResponseHandle<RoleOutputDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get [Brand] with [id]: {id}"
+                        ErrorMessage = $"Can not get [Role] with [id]: {id}"
                     };
                 }
 
-                var brandOutput = _mapper.Map<BrandOutputDto>(gBrand);
+                var roleOutput = _mapper.Map<RoleOutputDto>(role);
 
-                return new ResponseHandle<BrandOutputDto>
+                return new ResponseHandle<RoleOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
+                    Data = roleOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> GetBrand({JsonSerializer.Serialize(id)}) " +
+                _logger.LogError($"RoleServices -> GetRole({JsonSerializer.Serialize(id)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> CreateBrand(BrandCreateDto brandCreateDto)
+        public async ValueTask<ResponseHandle<RoleOutputDto>> CreateRole(RoleInputDto roleInputDto)
         {
             try
             {
-                var brand = _mapper.Map<Brand>(brandCreateDto);
+                var role = _mapper.Map<Role>(roleInputDto);
 
-                _unitOfWork.BrandRepository.Add(brand);
+                _unitOfWork.RoleRepository.Add(role);
                 await _unitOfWork.CommitAsync();
 
-                var brandOutput = _mapper.Map<BrandOutputDto>(brand);
+                var roleOutput = _mapper.Map<RoleOutputDto>(role);
 
-                return new ResponseHandle<BrandOutputDto>
+                return new ResponseHandle<RoleOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
+                    Data = roleOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> CreateBrand({JsonSerializer.Serialize(brandCreateDto)}) " +
+                _logger.LogError($"RoleServices -> CreateRole({JsonSerializer.Serialize(roleInputDto)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(BrandInputDto BrandInputDto)
+        public async ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(RoleUpdateDto roleUpdateDto)
         {
             try
             {
-                var gBrand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(BrandInputDto.Id));
+                var role = await _unitOfWork.RoleRepository.GetAsync(c => c.Id.Equals(roleUpdateDto.Id));
 
-                if (gBrand == null)
+                if (role == null)
                 {
-                    return new ResponseHandle<BrandOutputDto>
+                    return new ResponseHandle<RoleOutputDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get the [Brand]: {JsonSerializer.Serialize(BrandInputDto)}"
+                        ErrorMessage = $"Can not get the [Role]: {JsonSerializer.Serialize(roleUpdateDto)}"
                     };
                 }
 
                 //Mapping field modify
-                gBrand.Name = BrandInputDto.Name;
-                gBrand.Description = BrandInputDto.Description;
-                gBrand.ModifiedDate = DateTime.Now;
+                role.Name = roleUpdateDto.Name;
+                role.Description = roleUpdateDto.Description;
 
-                _unitOfWork.BrandRepository.Update(gBrand);
+                _unitOfWork.RoleRepository.Update(role);
                 await _unitOfWork.CommitAsync();
 
-                var BrandOutput = _mapper.Map<BrandOutputDto>(gBrand);
+                var roleOutput = _mapper.Map<RoleOutputDto>(role);
 
-                return new ResponseHandle<BrandOutputDto>
+                return new ResponseHandle<RoleOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = BrandOutput,
+                    Data = roleOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> UpdateBrand({JsonSerializer.Serialize(BrandInputDto)}) " +
+                _logger.LogError($"RoleServices -> UpdateRole({JsonSerializer.Serialize(roleUpdateDto)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> DeleteBrand(Guid id)
+        public async ValueTask<ResponseHandle<RoleOutputDto>> DeleteRole(Guid id)
         {
             try
             {
-                var brand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(id));
+                var role = await _unitOfWork.RoleRepository.GetAsync(c => c.Id.Equals(id));
 
-                if (brand == null)
+                if (role == null)
                 {
-                    return new ResponseHandle<BrandOutputDto>
+                    return new ResponseHandle<RoleOutputDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get [Brand] with [id]: {id}"
+                        ErrorMessage = $"Can not get [Role] with [id]: {id}"
                     };
                 }
 
-                _unitOfWork.BrandRepository.Remove(brand);
+                _unitOfWork.RoleRepository.Remove(role);
                 await _unitOfWork.CommitAsync();
 
 
-                var brandOutput = _mapper.Map<BrandOutputDto>(brand);
+                var roleOutput = _mapper.Map<RoleOutputDto>(role);
 
-                return new ResponseHandle<BrandOutputDto>
+                return new ResponseHandle<RoleOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
+                    Data = roleOutput,
                     ErrorMessage = string.Empty
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"BrandServices -> DeleteBrand({JsonSerializer.Serialize(id)}) " +
+                _logger.LogError($"RoleServices -> {{({JsonSerializer.Serialize(id)}) " +
                                  $"- Have exception: {ex}, at {DateTime.UtcNow.ToLongTimeString()}");
                 throw;
             }

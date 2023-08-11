@@ -24,7 +24,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return _customerSevices.GetAllCustomer();
         }
 
-        [HttpGet("get-customer/{id}")]
+        [HttpGet("get-customer-by-id/{id}")]
         public ValueTask<ResponseHandle<CustomerOuputDto>> GetCustomer(Guid id)
         {
             return _customerSevices.GetCustomer(id);

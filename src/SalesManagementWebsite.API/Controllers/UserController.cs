@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 
 namespace SalesManagementWebsite.Core.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/user")]
     [ApiController] 
     public class UserController : Controller, IUserService
@@ -32,10 +32,10 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _userService.Register(userRegisterDto);
         }
 
-        [HttpGet("get-user/{userName}")]
-        public async ValueTask<ResponseHandle<UserOuputDto>> GetUser(string userName)
+        [HttpGet("get-user-by-username/{userName}")]
+        public async ValueTask<ResponseHandle<UserOuputDto>> GetUserByUserName(string userName)
         {
-            return await _userService.GetUser(userName);
+            return await _userService.GetUserByUserName(userName);
         }
 
         [HttpGet("get-all-users")]

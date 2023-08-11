@@ -9,12 +9,15 @@ using SalesManagementWebsite.Core.Services.CustomerServices;
 using SalesManagementWebsite.Core.Services.ItemServices;
 using SalesManagementWebsite.Core.Services.KafkaServices;
 using SalesManagementWebsite.Core.Services.OrderServices;
+using SalesManagementWebsite.Core.Services.RoleServices;
 using SalesManagementWebsite.Core.Services.SupplierServices;
 using SalesManagementWebsite.Core.Services.UserServices;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using SalesManagementWebsite.Infrastructure;
 using SalesManagementWebsite.Infrastructure.UnitOfWork;
 using System.Text;
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +58,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseNpgsql(connectionString));
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -91,6 +94,7 @@ builder.Services.AddTransient(typeof(ICustomerSevices), typeof(CustomerSevices))
 builder.Services.AddTransient(typeof(IOrderServices), typeof(OrderServices));
 builder.Services.AddTransient(typeof(IKafkaServices), typeof(KafkaServices));
 builder.Services.AddTransient(typeof(ISupplierServices), typeof(SupplierServices));
+builder.Services.AddTransient(typeof(IRoleServices), typeof(RoleServices));
 
 var app = builder.Build();
 
