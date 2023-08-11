@@ -10,7 +10,11 @@ namespace SalesManagementWebsite.Core.AutoMapper
         {
             CreateMap<ItemInputDto, Item>();
             CreateMap<ItemCreateDto, Item>();
-            CreateMap<Item, ItemOutputDto>();
+            CreateMap<Item, ItemOutputDto>()
+               .ForMember(dest => dest.Category, opt => opt.MapFrom(x => x.Category))
+               .ForMember(dest => dest.Brand, opt => opt.MapFrom(x => x.Brand))
+               .ForMember(dest => dest.Supplier, opt => opt.MapFrom(x => x.Supplier));
+            CreateMap<Item, ItemListDto>();
         }
     }
 }

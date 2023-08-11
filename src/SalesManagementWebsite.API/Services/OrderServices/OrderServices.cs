@@ -106,7 +106,7 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
                 foreach (var od in orderCreateDto.OrderDetails)
                 {   
                     //(3) Check quantity item > quantity input or not ?
-                    var itemCheck = await _unitOfWork.ItemRepository.GetItem(od.ItemId);
+                    var itemCheck = await _unitOfWork.ItemRepository.GetItemById(od.ItemId);
 
                     if (itemCheck == null)
                     {

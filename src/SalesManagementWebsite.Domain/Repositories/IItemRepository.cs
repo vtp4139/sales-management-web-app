@@ -4,6 +4,6 @@ namespace SalesManagementWebsite.Domain.Repositories
 {
     public interface IItemRepository : IGenericRepository<Item>
     {
-        Task<Item?> GetItem(Guid id);
+        Task<Item?> GetItemById(Guid id);
     }
 }

@@ -1,4 +1,7 @@
-﻿
+﻿using SalesManagementWebsite.Contracts.Dtos.Brand;
+using SalesManagementWebsite.Contracts.Dtos.Category;
+using SalesManagementWebsite.Contracts.Dtos.Supplier;
+
 namespace SalesManagementWebsite.Contracts.Dtos.Item
 {
     public class ItemOutputDto
@@ -6,7 +9,8 @@ namespace SalesManagementWebsite.Contracts.Dtos.Item
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public Guid CategoryId { get; set; }
-        public Guid BrandId { get; set; }
+        public CategoryOutputDto? Category { get; set; }
+        public BrandOutputDto? Brand { get; set; }
+        public SupplierOutputDto? Supplier { get; set; }
     }
 }
