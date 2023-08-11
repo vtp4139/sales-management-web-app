@@ -13,6 +13,7 @@ namespace SalesManagementWebsite.Domain.UnitOfWork
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
         ISupplierRepository SupplierRepository { get; }
+        IRoleRepository RoleRepository { get; }
 
         void Commit();
         void Rollback();

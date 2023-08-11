@@ -16,6 +16,7 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
         private IOrderRepository? _orderRepository;
         private IOrderDetailRepository? _orderDetailRepository;
         private ISupplierRepository? _supplierRepository;
+        private IRoleRepository? _roleRepository;
 
         public UnitOfWork(SalesManagementDBContext dbContext)
         {
@@ -68,17 +69,19 @@ namespace SalesManagementWebsite.Infrastructure.UnitOfWork
             get { return _supplierRepository = _supplierRepository ?? new SupplierRepository(_dbContext); }
         }
 
+        public IRoleRepository RoleRepository
+        {
+            get { return _roleRepository = _roleRepository ?? new RoleRepository(_dbContext); }
+        }
+
         public void Commit()
             => _dbContext.SaveChanges();
-
 
         public async Task CommitAsync()
             => await _dbContext.SaveChangesAsync();
 
-
         public void Rollback()
             => _dbContext.Dispose();
-
 
         public async Task RollbackAsync()
             => await _dbContext.DisposeAsync();
