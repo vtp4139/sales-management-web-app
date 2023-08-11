@@ -16,6 +16,8 @@ using SalesManagementWebsite.Infrastructure;
 using SalesManagementWebsite.Infrastructure.UnitOfWork;
 using System.Text;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -55,7 +57,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseNpgsql(connectionString));
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

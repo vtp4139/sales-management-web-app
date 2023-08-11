@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace SalesManagementWebsite.Domain.Entities
 {
     public class BaseModel
