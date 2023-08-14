@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj" />
   </ItemGroup>
-
 </Project>
