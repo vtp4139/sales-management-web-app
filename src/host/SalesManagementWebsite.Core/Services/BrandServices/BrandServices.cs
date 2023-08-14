@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Brand;
-using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
@@ -14,12 +13,14 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BrandServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BrandServices> logger)
+        public BrandServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<BrandServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
@@ -99,6 +100,8 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
             {
                 var brand = _mapper.Map<Brand>(brandCreateDto);
 
+                brand.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+
                 _unitOfWork.BrandRepository.Add(brand);
                 await _unitOfWork.CommitAsync();
 
@@ -124,9 +127,9 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
         {
             try
             {
-                var gBrand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(BrandInputDto.Id));
+                var brand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(BrandInputDto.Id));
 
-                if (gBrand == null)
+                if (brand == null)
                 {
                     return new ResponseHandle<BrandOutputDto>
                     {
@@ -138,14 +141,15 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 }
 
                 //Mapping field modify
-                gBrand.Name = BrandInputDto.Name;
-                gBrand.Description = BrandInputDto.Description;
-                gBrand.ModifiedDate = DateTime.Now;
+                brand.Name = BrandInputDto.Name;
+                brand.Description = BrandInputDto.Description;
+                brand.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                brand.ModifiedDate = DateTime.Now;
 
-                _unitOfWork.BrandRepository.Update(gBrand);
+                _unitOfWork.BrandRepository.Update(brand);
                 await _unitOfWork.CommitAsync();
 
-                var BrandOutput = _mapper.Map<BrandOutputDto>(gBrand);
+                var BrandOutput = _mapper.Map<BrandOutputDto>(brand);
 
                 return new ResponseHandle<BrandOutputDto>
                 {

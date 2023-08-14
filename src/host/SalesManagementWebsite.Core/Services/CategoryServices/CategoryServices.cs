@@ -13,14 +13,14 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoryServices(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<CategoryServices> logger)
+        public CategoryServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CategoryServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _configuration = configuration;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetAllCategories()
@@ -100,6 +100,8 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
             {
                 var category = _mapper.Map<Category>(categoryCreateDto);
 
+                category.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+
                 _unitOfWork.CategoryRepository.Add(category);
                 await _unitOfWork.CommitAsync();
 
@@ -141,6 +143,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                 //Mapping field modify
                 gCategory.Name = categoryInputDto.Name;
                 gCategory.Description = categoryInputDto.Description;
+                gCategory.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
                 gCategory.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.CategoryRepository.Update(gCategory);

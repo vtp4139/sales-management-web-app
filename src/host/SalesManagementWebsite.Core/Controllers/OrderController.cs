@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.Core.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/order")]
     [ApiController]
     public class OrderController : Controller, IOrderServices

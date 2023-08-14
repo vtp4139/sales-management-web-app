@@ -9,8 +9,16 @@ namespace SalesManagementWebsite.Core.AutoMapper
         public OrderProfile()
         {
             CreateMap<Order, OrderListOutputDto>();
-            CreateMap<Order, OrderOutputDto>();
-            CreateMap<OrderDetail, OrderDetailOutputDto>();
+
+            CreateMap<User, UserOrderDto>();
+
+            CreateMap<Order, OrderOutputDto>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(x => x.User))
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(x => x.Customer));
+
+            CreateMap<OrderDetail, OrderDetailOutputDto>()
+                 .ForMember(dest => dest.ItemName, opt => opt.MapFrom(x => x.Item.Name));
+
             CreateMap<OrderInputDto, Order>().ForMember(x => x.OrderDetails, opt => opt.Ignore());
             CreateMap<OrderDetailInputDto, OrderDetail>();         
         }

@@ -1,4 +1,6 @@
 ﻿
+using SalesManagementWebsite.Contracts.Dtos.Item;
+
 namespace SalesManagementWebsite.Contracts.Dtos.Order
 {
     public class OrderDetailOutputDto
@@ -6,6 +8,6 @@ namespace SalesManagementWebsite.Contracts.Dtos.Order
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Discount { get; set; }
-        public Guid ItemId { get; set; }
+        public string ItemName { get; set; } = string.Empty;
     }
 }

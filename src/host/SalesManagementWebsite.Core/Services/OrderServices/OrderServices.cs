@@ -13,12 +13,14 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<OrderServices> logger)
+        public OrderServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<OrderServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<OrderListOutputDto>> GetAllOrders()
@@ -99,9 +101,21 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
             {
                 //(1) Create Order
                 var order = _mapper.Map<Order>(orderCreateDto);
-                _unitOfWork.OrderRepository.Add(order);
 
+                Guid userId;
 
+                if(Guid.TryParse(_httpContextAccessor.HttpContext?.User.FindFirst("user_id")?.Value, out userId))
+                {
+                    order.UserId = userId;
+                    order.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                    _unitOfWork.OrderRepository.Add(order);
+                }
+                else
+                {
+                    _logger.LogError($"OrderServices - CreateOrder - userId: {userId} is null");
+                    throw new ArgumentNullException($"OrderServices - CreateOrder - userId: {userId} is null");
+                }
+                
                 //(2) Add roles for user
                 foreach (var od in orderCreateDto.OrderDetails)
                 {   
@@ -110,6 +124,8 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
 
                     if (itemCheck == null)
                     {
+                        _logger.LogError($@"OrderServices -> CreateOrder({JsonSerializer.Serialize(orderCreateDto)}) err- Can not get [Item] with [id]: {od.ItemId}");
+
                         return new ResponseHandle<OrderOutputDto>
                         {
                             IsSuccess = true,
@@ -121,6 +137,8 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
 
                     if (itemCheck.Quantity < od.Quantity)
                     {
+                        _logger.LogError($@"OrderServices -> CreateOrder({JsonSerializer.Serialize(orderCreateDto)}) err-[Item] with [id]: {od.ItemId} with [Quantity]: {itemCheck.Quantity} do not have enough quantity ({od.Quantity})");
+
                         return new ResponseHandle<OrderOutputDto>
                         {
                             IsSuccess = true,
