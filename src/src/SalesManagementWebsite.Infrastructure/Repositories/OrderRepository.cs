@@ -13,8 +13,11 @@ namespace SalesManagementWebsite.Infrastructure.Repositories
         public async Task<Order?> GetOrderAsync(Guid id)
         {
             return await _dbContext.Orders
-                         .AsNoTracking()
+                         .AsNoTracking()                        
+                         .Include(od => od.User)
+                         .Include(od => od.Customer)
                          .Include(od => od.OrderDetails)
+                         .ThenInclude(odt => odt.Item)
                          .FirstOrDefaultAsync(u => u.Id.Equals(id));
         }
     }

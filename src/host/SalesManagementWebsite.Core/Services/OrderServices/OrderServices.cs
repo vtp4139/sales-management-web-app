@@ -3,7 +3,9 @@ using SalesManagementWebsite.Contracts.Dtos.Order;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace SalesManagementWebsite.Core.Services.OrderServices
@@ -13,12 +15,14 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<OrderServices> logger)
+        public OrderServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<OrderServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<OrderListOutputDto>> GetAllOrders()
@@ -99,6 +103,7 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
             {
                 //(1) Create Order
                 var order = _mapper.Map<Order>(orderCreateDto);
+                order.UserId = Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirst("user_id")?.Value);
                 _unitOfWork.OrderRepository.Add(order);
 
 
@@ -110,6 +115,8 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
 
                     if (itemCheck == null)
                     {
+                        _logger.LogError($@"OrderServices -> CreateOrder({JsonSerializer.Serialize(orderCreateDto)}) err- Can not get [Item] with [id]: {od.ItemId}");
+
                         return new ResponseHandle<OrderOutputDto>
                         {
                             IsSuccess = true,
@@ -121,6 +128,8 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
 
                     if (itemCheck.Quantity < od.Quantity)
                     {
+                        _logger.LogError($@"OrderServices -> CreateOrder({JsonSerializer.Serialize(orderCreateDto)}) err-[Item] with [id]: {od.ItemId} with [Quantity]: {itemCheck.Quantity} do not have enough quantity ({od.Quantity})");
+
                         return new ResponseHandle<OrderOutputDto>
                         {
                             IsSuccess = true,

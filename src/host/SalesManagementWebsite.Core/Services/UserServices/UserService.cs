@@ -59,14 +59,14 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 }
 
                 //Gen JWT Token
-                var token = TokenHelper.GenerateToken(
-                      _configuration["JWT:Secret"]
-                      , _configuration["JWT:ValidIssuer"]
-                      , _configuration["JWT:ValidAudience"]
-                      , userLogin.UserRoles.Select(ur => ur.Role.Name).ToList()
-                      , userLogin.Id.ToString()
-                      , userLogin.UserName
-                      , userLogin.Name); ;
+                var token = TokenHelper.GenerateToken( new JWTInput {
+                      jwtSecret = _configuration["JWT:Secret"],
+                      issuer = _configuration["JWT:ValidIssuer"],
+                      audience = _configuration["JWT:ValidAudience"],
+                      userRoles = userLogin.UserRoles.Select(ur => ur.Role.Name).ToList(),
+                      id = userLogin.Id,
+                      userName = userLogin.UserName,
+                      fullName = userLogin.Name}) ;
 
 
                 var roleList = userLogin.UserRoles.Select(ur => ur.Role).ToList();

@@ -140,6 +140,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 gItem.Name = itemInputDto.Name;
                 gItem.Description = itemInputDto.Description;
                 gItem.Price = itemInputDto.Price;
+                gItem.Quantity = itemInputDto.Quantity;
                 gItem.CategoryId = itemInputDto.CategoryId;
                 gItem.BrandId = itemInputDto.BrandId;
                 gItem.SupplierId = itemInputDto.SupplierId;
