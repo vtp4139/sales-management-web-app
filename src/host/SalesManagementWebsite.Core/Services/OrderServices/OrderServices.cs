@@ -3,9 +3,7 @@ using SalesManagementWebsite.Contracts.Dtos.Order;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Security.Claims;
 using System.Text.Json;
 
 namespace SalesManagementWebsite.Core.Services.OrderServices
@@ -103,10 +101,21 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
             {
                 //(1) Create Order
                 var order = _mapper.Map<Order>(orderCreateDto);
-                order.UserId = Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirst("user_id")?.Value);
-                _unitOfWork.OrderRepository.Add(order);
 
+                Guid userId;
 
+                if(Guid.TryParse(_httpContextAccessor.HttpContext?.User.FindFirst("user_id")?.Value, out userId))
+                {
+                    order.UserId = userId;
+                    order.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                    _unitOfWork.OrderRepository.Add(order);
+                }
+                else
+                {
+                    _logger.LogError($"OrderServices - CreateOrder - userId: {userId} is null");
+                    throw new ArgumentNullException($"OrderServices - CreateOrder - userId: {userId} is null");
+                }
+                
                 //(2) Add roles for user
                 foreach (var od in orderCreateDto.OrderDetails)
                 {   

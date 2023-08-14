@@ -13,12 +13,14 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SupplierServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<SupplierServices> logger)
+        public SupplierServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<SupplierServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<SupplierOutputDto>> GetAllSuppliers()
@@ -98,6 +100,8 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
             {
                 var supplier = _mapper.Map<Supplier>(supplierCreateDto);
 
+                supplier.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+
                 _unitOfWork.SupplierRepository.Add(supplier);
                 await _unitOfWork.CommitAsync();
 
@@ -123,9 +127,9 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
         {
             try
             {
-                var gSupplier = await _unitOfWork.SupplierRepository.GetAsync(c => c.Id.Equals(supplierUpdateDto.Id));
+                var supplier = await _unitOfWork.SupplierRepository.GetAsync(c => c.Id.Equals(supplierUpdateDto.Id));
 
-                if (gSupplier == null)
+                if (supplier == null)
                 {
                     return new ResponseHandle<SupplierOutputDto>
                     {
@@ -137,15 +141,17 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 }
 
                 //Mapping field modify
-                gSupplier.CompanyName = supplierUpdateDto.CompanyName;
-                gSupplier.Address = supplierUpdateDto.Address;
-                gSupplier.Phone = supplierUpdateDto.Phone;
-                gSupplier.City = supplierUpdateDto.City;
+                supplier.CompanyName = supplierUpdateDto.CompanyName;
+                supplier.Address = supplierUpdateDto.Address;
+                supplier.Phone = supplierUpdateDto.Phone;
+                supplier.City = supplierUpdateDto.City;
+                supplier.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                supplier.ModifiedDate = DateTime.Now;
 
-                _unitOfWork.SupplierRepository.Update(gSupplier);
+                _unitOfWork.SupplierRepository.Update(supplier);
                 await _unitOfWork.CommitAsync();
 
-                var supplierOutput = _mapper.Map<SupplierOutputDto>(gSupplier);
+                var supplierOutput = _mapper.Map<SupplierOutputDto>(supplier);
 
                 return new ResponseHandle<SupplierOutputDto>
                 {

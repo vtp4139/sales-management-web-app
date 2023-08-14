@@ -18,13 +18,15 @@ namespace SalesManagementWebsite.Core.Services.UserServices
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<UserService> logger)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ILogger<UserService> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<UserOuputDto>> Login(UserLoginDto userLoginDto)
@@ -104,6 +106,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 //Hash password when save to db
                 user.Salt = HashPasswordsHelper.GeneratedSalt();
                 user.Password = HashPasswordsHelper.HashPasswords(user.Password, user.Salt);
+                user.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
                 _unitOfWork.UserRepository.Add(user);
               
                 //Add roles for user
@@ -234,6 +237,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 user.Email = userInputDto.Email;
                 user.IdentityCard = userInputDto.IdentityCard;
                 user.DOB = userInputDto.DOB;
+                user.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
                 user.ModifiedDate = DateTime.Now;
 
                 _unitOfWork.UserRepository.Update(user);

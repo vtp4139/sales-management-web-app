@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Customer;
-using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
@@ -14,12 +13,14 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerSevices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CustomerSevices> logger)
+        public CustomerSevices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CustomerSevices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<CustomerOuputDto>> GetAllCustomer()
@@ -99,6 +100,8 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
             {
                 var customer = _mapper.Map<Customer>(customerCreateDto);
 
+                customer.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+
                 _unitOfWork.CustomerRepository.Add(customer);
                 await _unitOfWork.CommitAsync();
 
@@ -124,9 +127,9 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
         {
             try
             {
-                var gCustomer = await _unitOfWork.CustomerRepository.GetAsync(c => c.Id.Equals(customerInputDto.Id));
+                var customer = await _unitOfWork.CustomerRepository.GetAsync(c => c.Id.Equals(customerInputDto.Id));
 
-                if (gCustomer == null)
+                if (customer == null)
                 {
                     return new ResponseHandle<CustomerOuputDto>
                     {
@@ -138,18 +141,20 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 }
 
                 //Mapping field modify
-                gCustomer.CustomerName = customerInputDto.CustomerName;
-                gCustomer.Address = customerInputDto.Address;
-                gCustomer.City = customerInputDto.City;
-                gCustomer.PostalCode = customerInputDto.PostalCode;
-                gCustomer.Phone = customerInputDto.Phone;
-                gCustomer.Fax = customerInputDto.Fax;
-                gCustomer.ModifiedDate = DateTime.Now;
+                customer.CustomerName = customerInputDto.CustomerName;
+                customer.Address = customerInputDto.Address;
+                customer.City = customerInputDto.City;
+                customer.PostalCode = customerInputDto.PostalCode;
+                customer.Phone = customerInputDto.Phone;
+                customer.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                customer.Fax = customerInputDto.Fax;
 
-                _unitOfWork.CustomerRepository.Update(gCustomer);
+                customer.ModifiedDate = DateTime.Now;
+
+                _unitOfWork.CustomerRepository.Update(customer);
                 await _unitOfWork.CommitAsync();
 
-                var itemOutput = _mapper.Map<CustomerOuputDto>(gCustomer);
+                var itemOutput = _mapper.Map<CustomerOuputDto>(customer);
 
                 return new ResponseHandle<CustomerOuputDto>
                 {

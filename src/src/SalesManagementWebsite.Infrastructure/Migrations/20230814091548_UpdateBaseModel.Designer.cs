@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SalesManagementWebsite.Infrastructure;
@@ -11,9 +12,11 @@ using SalesManagementWebsite.Infrastructure;
 namespace SalesManagementWebsite.Infrastructure.Migrations
 {
     [DbContext(typeof(SalesManagementDBContext))]
-    partial class SalesManagementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230814091548_UpdateBaseModel")]
+    partial class UpdateBaseModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

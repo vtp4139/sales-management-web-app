@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Castle.Core.Resource;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Domain.Entities;
@@ -13,12 +14,14 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemServices> logger)
+        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemServices> logger, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async ValueTask<ResponseHandle<ItemListDto>> GetAllItems()
@@ -98,6 +101,8 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
             {
                 var item = _mapper.Map<Item>(itemCreateDto);
 
+                item.CreatedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+
                 _unitOfWork.ItemRepository.Add(item);
                 await _unitOfWork.CommitAsync();
 
@@ -123,9 +128,9 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
         {
             try
             {
-                var gItem = await _unitOfWork.ItemRepository.GetAsync(c => c.Id.Equals(itemInputDto.Id));
+                var item = await _unitOfWork.ItemRepository.GetAsync(c => c.Id.Equals(itemInputDto.Id));
 
-                if (gItem == null)
+                if (item == null)
                 {
                     return new ResponseHandle<ItemOutputDto>
                     {
@@ -137,19 +142,20 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 }
 
                 //Mapping field modify
-                gItem.Name = itemInputDto.Name;
-                gItem.Description = itemInputDto.Description;
-                gItem.Price = itemInputDto.Price;
-                gItem.Quantity = itemInputDto.Quantity;
-                gItem.CategoryId = itemInputDto.CategoryId;
-                gItem.BrandId = itemInputDto.BrandId;
-                gItem.SupplierId = itemInputDto.SupplierId;
-                gItem.ModifiedDate = DateTime.Now;
+                item.Name = itemInputDto.Name;
+                item.Description = itemInputDto.Description;
+                item.Price = itemInputDto.Price;
+                item.Quantity = itemInputDto.Quantity;
+                item.CategoryId = itemInputDto.CategoryId;
+                item.BrandId = itemInputDto.BrandId;
+                item.SupplierId = itemInputDto.SupplierId;
+                item.ModifiedBy = _httpContextAccessor.HttpContext?.User.FindFirst("username")?.Value;
+                item.ModifiedDate = DateTime.Now;
 
-                _unitOfWork.ItemRepository.Update(gItem);
+                _unitOfWork.ItemRepository.Update(item);
                 await _unitOfWork.CommitAsync();
 
-                var itemOutput = _mapper.Map<ItemOutputDto>(gItem);
+                var itemOutput = _mapper.Map<ItemOutputDto>(item);
 
                 return new ResponseHandle<ItemOutputDto>
                 {
