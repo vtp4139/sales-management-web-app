@@ -26,9 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj" />
-    <ProjectReference Include="..\SalesManagementWebsite.Domain\SalesManagementWebsite.Domain.csproj" />
-    <ProjectReference Include="..\SalesManagementWebsite.Infrastructure\SalesManagementWebsite.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\SalesManagementWebsite.Contracts\SalesManagementWebsite.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\SalesManagementWebsite.Domain\SalesManagementWebsite.Domain.csproj" />
+    <ProjectReference Include="..\..\src\SalesManagementWebsite.Infrastructure\SalesManagementWebsite.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>
