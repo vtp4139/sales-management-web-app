@@ -1,15 +1,21 @@
+FULL LUỒNG DEPLOY AZURE
+
+- Có tài khoản Azure (Đã có payment method)
+- Tạo một Subcription (Quản lý chi tiêu trong Azure)
+- Trong Subcription tạo một Resource Group (Quản lý các resource đăng ký trên azure)
+- Trong Resource Group tạo Web App
+- Ở project .NET -> Login tài khoản Microsoft -> chọn project host muốn Publish -> Điền profile -> chọn Subcription -> Web App -> Publish
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SET UP AUTHENTICATION
 
-B1:
-Vào trong Azure Active Directory để đăng ký App registrations => để lấy clientId và secrectID
+    B1: Vào trong Azure Active Directory để đăng ký App registrations => để lấy clientId và secrectID
 
-B2
-Trong Web App -> Settings -> Authentication -> Thêm mới một provider (sử dụng của Microsoft) -> cung cấp lientId và secrectID
+    B2: Trong Web App -> Settings -> Authentication -> Thêm mới một provider (sử dụng của Microsoft) -> cung cấp lientId và secrectID
 
-B3
-Thêm mới một User: Azure AD -> User -> Create new user -> điền thông tin User -> ID, Pass 
+    B3: Thêm mới một User: Azure AD -> User -> Create new user -> điền thông tin User -> ID, Pass 
 
-LỖI THƯỜNG GẶP
+<LỖI THƯỜNG GẶP>
 
 Không trùng với Redirect URIs: Azure AD -> App registrations -> Redirect URIs -> Thêm uri mà nó báo lỗi (https://<tên app>.net/.auth/login/aad/callback)
 

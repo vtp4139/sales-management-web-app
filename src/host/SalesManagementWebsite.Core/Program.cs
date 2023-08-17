@@ -119,6 +119,15 @@ var option = new RewriteOptions();
 option.AddRedirect("^$", "swagger");
 app.UseRewriter(option);
 
+//Add CORS Policy
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+});
+
 app.UseAuthentication();
 
 app.UseAuthorization();
