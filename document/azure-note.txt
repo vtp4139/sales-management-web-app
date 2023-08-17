@@ -1,0 +1,21 @@
+SET UP AUTHENTICATION
+
+B1:
+Vào trong Azure Active Directory để đăng ký App registrations => để lấy clientId và secrectID
+
+B2
+Trong Web App -> Settings -> Authentication -> Thêm mới một provider (sử dụng của Microsoft) -> cung cấp lientId và secrectID
+
+B3
+Thêm mới một User: Azure AD -> User -> Create new user -> điền thông tin User -> ID, Pass 
+
+LỖI THƯỜNG GẶP
+
+Không trùng với Redirect URIs: Azure AD -> App registrations -> Redirect URIs -> Thêm uri mà nó báo lỗi (https://<tên app>.net/.auth/login/aad/callback)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CÁCH SET UP Configuration => Lựu trữ các chuỗi cần bảo mật như connection string
+
+Application settings -> Name: ConnectionStrings:DefaultConnection -> Value: xxxx
+
+
