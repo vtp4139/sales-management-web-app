@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 
 namespace SalesManagementWebsite.Core.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController] 
     public class UserController : Controller, IUserService
@@ -25,7 +25,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _userService.Login(userLoginDto);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "administration")]
         [HttpPost("register")]
         public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
