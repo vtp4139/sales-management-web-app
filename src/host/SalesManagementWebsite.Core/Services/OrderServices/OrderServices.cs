@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Order;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -36,7 +37,7 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get list [Orders]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Order))
                     };
                 }
 
@@ -72,7 +73,7 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get [Order] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Order), id)
                     };
                 }
 

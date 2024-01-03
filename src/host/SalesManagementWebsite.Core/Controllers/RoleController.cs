@@ -7,7 +7,7 @@ using SalesManagementWebsite.Core.Services.RoleServices;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize(Roles = "administration")]
-    [Route("api/role")]
+    [Route("api/roles")]
     [ApiController]
     public class RoleController : Controller, IRoleServices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _roleServices = roleServices;
         }
 
-        [HttpGet("get-all-roles")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<RoleOutputDto>> GetAllRoles()
         {
             return await _roleServices.GetAllRoles();
         }
 
-        [HttpGet("get-role-by-id/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<ResponseHandle<RoleOutputDto>> GetRole(Guid id)
         {
             return await _roleServices.GetRole(id);
         }
 
-        [HttpPost("create-role")]
+        [HttpPost]
         public async ValueTask<ResponseHandle<RoleOutputDto>> CreateRole(RoleInputDto roleInputDto)
         {
             return await _roleServices.CreateRole(roleInputDto);
         }
 
-        [HttpPut("update-role")]
-        public async ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(RoleUpdateDto roleUpdateDto)
+        [HttpPut("{id}")]
+        public async ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(Guid id, RoleUpdateDto roleUpdateDto)
         {
-            return await _roleServices.UpdateRole(roleUpdateDto);
+            return await _roleServices.UpdateRole(id, roleUpdateDto);
         }
 
-        [HttpDelete("delete-role")]
+        [HttpDelete("{id}")]
         public async ValueTask<ResponseHandle<RoleOutputDto>> DeleteRole(Guid id)
         {
             return await _roleServices.DeleteRole(id);

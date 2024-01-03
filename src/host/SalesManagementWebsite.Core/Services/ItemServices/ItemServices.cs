@@ -2,6 +2,7 @@
 using Castle.Core.Resource;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -36,8 +37,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list of [Item]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Item))
                     };
                 }
 
@@ -47,9 +47,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = null,
-                    ListData = itemsOutput,
-                    ErrorMessage = string.Empty
+                    ListData = itemsOutput
                 };
             }
             catch (Exception ex)
@@ -72,8 +70,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Item] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Item), id)
                     };
                 }
 
@@ -83,8 +80,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)
@@ -124,11 +120,11 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
             }
         }
 
-        public async ValueTask<ResponseHandle<ItemOutputDto>> UpdateItem(ItemInputDto itemInputDto)
+        public async ValueTask<ResponseHandle<ItemOutputDto>> UpdateItem(Guid id, ItemInputDto itemInputDto)
         {
             try
             {
-                var item = await _unitOfWork.ItemRepository.GetAsync(c => c.Id.Equals(itemInputDto.Id));
+                var item = await _unitOfWork.ItemRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (item == null)
                 {
@@ -136,8 +132,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the [Item]: {JsonSerializer.Serialize(itemInputDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Item), id)
                     };
                 }
 
@@ -161,8 +156,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)
@@ -185,8 +179,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Item] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Item), id)
                     };
                 }
 
@@ -200,8 +193,7 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = cateOutput,
-                    ErrorMessage = string.Empty
+                    Data = cateOutput
                 };
             }
             catch (Exception ex)

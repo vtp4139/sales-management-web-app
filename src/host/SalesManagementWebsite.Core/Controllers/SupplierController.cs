@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Supplier;
 namespace SalesManagementWebsite.Core.Controllers
 {
     //[Authorize]
-    [Route("api/supplier")]
+    [Route("api/suppliers")]
     [ApiController]
     public class SupplierController : Controller, ISupplierServices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _supplierServices = supplierServices;
         }
 
-        [HttpGet("get-all-supplier")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<SupplierOutputDto>> GetAllSuppliers()
         {
             return await _supplierServices.GetAllSuppliers();
         }
 
-        [HttpGet("get-supplier-by-id/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<ResponseHandle<SupplierOutputDto>> GetSupplier(Guid id)
         {
             return await _supplierServices.GetSupplier(id);
         }
 
-        [HttpPost("create-supplier")]
+        [HttpPost]
         public async ValueTask<ResponseHandle<SupplierOutputDto>> CreateSupplier(SupplierCreateDto supplierCreateDto)
         {
             return await _supplierServices.CreateSupplier(supplierCreateDto);
         }
 
-        [HttpPut("update-supplier")]
-        public async ValueTask<ResponseHandle<SupplierOutputDto>> UpdateSupplier(SupplierUpdateDto supplierUpdateDto)
+        [HttpPut("{id}")]
+        public async ValueTask<ResponseHandle<SupplierOutputDto>> UpdateSupplier(Guid id, SupplierUpdateDto supplierUpdateDto)
         {
-            return await _supplierServices.UpdateSupplier(supplierUpdateDto);
+            return await _supplierServices.UpdateSupplier(id, supplierUpdateDto);
         }
 
-        [HttpDelete("delete-supplier")]
+        [HttpDelete("{id}")]
         public async ValueTask<ResponseHandle<SupplierOutputDto>> DeleteSupplier(Guid id)
         {
             return await _supplierServices.DeleteSupplier(id);

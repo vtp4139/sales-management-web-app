@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.Role;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -33,8 +34,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list [Roles]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Role))
                     };
                 }
 
@@ -45,8 +45,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = rolesOutput,
-                    ErrorMessage = string.Empty
+                    ListData = rolesOutput
                 };
             }
             catch (Exception ex)
@@ -70,7 +69,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get [Role] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Role), id)
                     };
                 }
 
@@ -80,8 +79,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = roleOutput,
-                    ErrorMessage = string.Empty
+                    Data = roleOutput
                 };
             }
             catch (Exception ex)
@@ -107,8 +105,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = roleOutput,
-                    ErrorMessage = string.Empty
+                    Data = roleOutput
                 };
             }
             catch (Exception ex)
@@ -119,11 +116,11 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
             }
         }
 
-        public async ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(RoleUpdateDto roleUpdateDto)
+        public async ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(Guid id, RoleUpdateDto roleUpdateDto)
         {
             try
             {
-                var role = await _unitOfWork.RoleRepository.GetAsync(c => c.Id.Equals(roleUpdateDto.Id));
+                var role = await _unitOfWork.RoleRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (role == null)
                 {
@@ -131,8 +128,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the [Role]: {JsonSerializer.Serialize(roleUpdateDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Role), id)
                     };
                 }
 
@@ -149,8 +145,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = roleOutput,
-                    ErrorMessage = string.Empty
+                    Data = roleOutput
                 };
             }
             catch (Exception ex)
@@ -173,8 +168,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Role] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Role), id)
                     };
                 }
 
@@ -188,8 +182,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = roleOutput,
-                    ErrorMessage = string.Empty
+                    Data = roleOutput
                 };
             }
             catch (Exception ex)

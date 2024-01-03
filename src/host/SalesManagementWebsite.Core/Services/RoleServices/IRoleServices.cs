@@ -8,7 +8,7 @@ namespace SalesManagementWebsite.Core.Services.RoleServices
         ValueTask<ResponseHandle<RoleOutputDto>> GetAllRoles();
         ValueTask<ResponseHandle<RoleOutputDto>> GetRole(Guid id);
         ValueTask<ResponseHandle<RoleOutputDto>> CreateRole(RoleInputDto roleInputDto);
-        ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(RoleUpdateDto roleUpdateDto);
+        ValueTask<ResponseHandle<RoleOutputDto>> UpdateRole(Guid id, RoleUpdateDto roleUpdateDto);
         ValueTask<ResponseHandle<RoleOutputDto>> DeleteRole(Guid id);
     }
 }

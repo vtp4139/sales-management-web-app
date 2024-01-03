@@ -9,6 +9,7 @@ using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Data;
 using System.Net;
 using System.Text.Json;
+using SalesManagementWebsite.Contracts.Utilities;
 
 namespace SalesManagementWebsite.Core.Services.UserServices
 {
@@ -41,8 +42,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = "User not found, login fail"
+                        ErrorMessage = MessageHandle.ERROR_LOGIN_FAIL_USER_NOT_FOUND
                     };
                 }
 
@@ -55,8 +55,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = "Password is wrong, please try a new password!"
+                        ErrorMessage = MessageHandle.ERROR_LOGIN_FAIL_WRONG_PASSWORD
                     };
                 }
 
@@ -84,8 +83,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = userOutput,
-                    ErrorMessage = string.Empty
+                    Data = userOutput
                 };
             }
             catch (Exception ex)
@@ -126,8 +124,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = userOutput,
-                    ErrorMessage = string.Empty
+                    Data = userOutput
                 };
             }
             catch (Exception ex)
@@ -151,7 +148,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get the info of user: {userName}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND, nameof(User), "UserName", userName)
                     };
                 }
 
@@ -167,8 +164,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = userOutput,
-                    ErrorMessage = string.Empty
+                    Data = userOutput
                 };
             }
             catch (Exception ex)
@@ -190,8 +186,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the list of user"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(User))
                     };
                 }
 
@@ -202,8 +197,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
                     Data = null,
-                    ListData = userListOutput,
-                    ErrorMessage = string.Empty
+                    ListData = userListOutput
                 };
             }
             catch (Exception ex)
@@ -213,11 +207,11 @@ namespace SalesManagementWebsite.Core.Services.UserServices
             }
         }
 
-        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(string userName, UserInputDto userInputDto)
         {
             try
             {
-                var user = await _unitOfWork.UserRepository.GetUser(userInputDto.UserName);
+                var user = await _unitOfWork.UserRepository.GetUser(userName);
 
                 if (user == null)
                 {
@@ -225,8 +219,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the info of [User]: {userInputDto.UserName}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND, nameof(User), "UserName", userName)
                     };
                 }
 
@@ -261,11 +254,11 @@ namespace SalesManagementWebsite.Core.Services.UserServices
             }
         }
 
-        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto)
+        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(string userName, UserStatusInputDto userInputDto)
         {
             try
             {
-                var user = await _unitOfWork.UserRepository.GetUser(userInputDto.UserName);
+                var user = await _unitOfWork.UserRepository.GetUser(userName);
 
                 if (user == null)
                 {
@@ -273,8 +266,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the info of user: {userInputDto.UserName}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND, nameof(User), "UserName", userName)
                     };
                 }
 
@@ -290,8 +282,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = userOutput,
-                    ErrorMessage = string.Empty
+                    Data = userOutput
                 };
             }
             catch (Exception ex)
