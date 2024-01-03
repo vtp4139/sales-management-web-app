@@ -10,6 +10,7 @@
 - Contains the APIs and logic handles
 - Using Entity Framework Core - Code First
 - Using JWT to config and handle login authentication
+- Link deploy: https://sales-management-web-app.azurewebsites.net/swagger/index.html
 ### Frontend 
 (Not built yet)
 
