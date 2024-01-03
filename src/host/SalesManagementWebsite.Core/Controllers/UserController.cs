@@ -6,7 +6,7 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 
 namespace SalesManagementWebsite.Core.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController] 
     public class UserController : Controller, IUserService
@@ -25,35 +25,35 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _userService.Login(userLoginDto);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "administration")]
         [HttpPost("register")]
         public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
             return await _userService.Register(userRegisterDto);
         }
 
-        [HttpGet("get-user-by-username/{userName}")]
+        [HttpGet("{userName}")]
         public async ValueTask<ResponseHandle<UserOuputDto>> GetUserByUserName(string userName)
         {
             return await _userService.GetUserByUserName(userName);
         }
 
-        [HttpGet("get-all-users")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers()
         {
             return await _userService.GetAllUsers();
         }
 
-        [HttpPut("update-user")]
-        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto)
+        [HttpPut("{userName}")]
+        public async ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(string userName, UserInputDto userInputDto)
         {
-            return await _userService.UpdateUser(userInputDto);
+            return await _userService.UpdateUser(userName, userInputDto);
         }
 
-        [HttpPut("change-status-user")]
-        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto)
+        [HttpPut("{userName}/status")]
+        public async ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(string userName, UserStatusInputDto userInputDto)
         {
-            return await _userService.ChangeStatusUser(userInputDto);
+            return await _userService.ChangeStatusUser(userName, userInputDto);
         }
     }
 }

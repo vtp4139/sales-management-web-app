@@ -4,8 +4,6 @@ namespace SalesManagementWebsite.Contracts.Dtos.Item
 {
     public class ItemInputDto
     {
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "{0} is empty!")]
         public string Name { get; set; } = string.Empty;
 

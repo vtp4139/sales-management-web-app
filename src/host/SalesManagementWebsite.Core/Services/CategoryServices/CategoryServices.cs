@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Category;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -35,8 +36,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list category"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Category))
                     };
                 }
 
@@ -46,9 +46,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = null,
-                    ListData = cateListOutput,
-                    ErrorMessage = string.Empty
+                    ListData = cateListOutput
                 };
             }
             catch (Exception ex)
@@ -71,8 +69,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get category with id: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Category), id)
                     };
                 }
 
@@ -82,8 +79,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = cateOutput,
-                    ErrorMessage = string.Empty
+                    Data = cateOutput
                 };
             }
             catch (Exception ex)
@@ -123,11 +119,11 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
             }
         }
 
-        public async ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(CategoryInputDto categoryInputDto)
+        public async ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(Guid id, CategoryInputDto categoryInputDto)
         {
             try
             {
-                var gCategory = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id.Equals(categoryInputDto.Id));
+                var gCategory = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (gCategory == null)
                 {
@@ -135,8 +131,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the category: {JsonSerializer.Serialize(categoryInputDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Category), id)
                     };
                 }
 
@@ -155,8 +150,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = categoryOutput,
-                    ErrorMessage = string.Empty
+                    Data = categoryOutput
                 };
             }
             catch (Exception ex)
@@ -180,7 +174,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
                         Data = null,
-                        ErrorMessage = $"Can not get category with id: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Category), id)
                     };
                 }
 
@@ -194,8 +188,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = cateOutput,
-                    ErrorMessage = string.Empty
+                    Data = cateOutput
                 };
             }
             catch (Exception ex)

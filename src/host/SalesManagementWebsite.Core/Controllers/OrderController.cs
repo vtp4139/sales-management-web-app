@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
-    [Route("api/order")]
+    [Route("api/orders")]
     [ApiController]
     public class OrderController : Controller, IOrderServices
     {
@@ -18,19 +18,19 @@ namespace SalesManagementWebsite.Core.Controllers
             _orderServices = orderServices;
         }      
 
-        [HttpGet("get-all-orders")]
+        [HttpGet]
         public ValueTask<ResponseHandle<OrderListOutputDto>> GetAllOrders()
         {
             return _orderServices.GetAllOrders();
         }
 
-        [HttpGet("get-order-by-id/{id}")]
+        [HttpGet("{id}")]
         public ValueTask<ResponseHandle<OrderOutputDto>> GetOrder(Guid id)
         {
             return _orderServices.GetOrder(id);
         }
 
-        [HttpPost("create-order")]
+        [HttpPost]
         public ValueTask<ResponseHandle<OrderOutputDto>> CreateOrder(OrderInputDto orderCreateDto)
         {
             return _orderServices.CreateOrder(orderCreateDto);

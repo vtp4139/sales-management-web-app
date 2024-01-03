@@ -9,7 +9,7 @@ namespace SalesManagementWebsite.Core.Services.UserServices
         public ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto);
         public ValueTask<ResponseHandle<UserOuputDto>> GetUserByUserName(string userName);
         public ValueTask<ResponseHandle<UsersListOuputDto>> GetAllUsers();
-        public ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(UserInputDto userInputDto);
-        public ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(UserStatusInputDto userInputDto);
+        public ValueTask<ResponseHandle<UserOuputDto>> UpdateUser(string userName, UserInputDto userInputDto);
+        public ValueTask<ResponseHandle<UserOuputDto>> ChangeStatusUser(string userName, UserStatusInputDto userInputDto);
     }
 }

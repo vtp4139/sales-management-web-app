@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
-    [Route("api/item")]
+    [Route("api/items")]
     [ApiController] 
     public class ItemController : Controller, IItemServices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _itemServices = itemServices;
         }
 
-        [HttpGet("get-all-items")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<ItemListDto>> GetAllItems()
         {
             return await _itemServices.GetAllItems();
         }
 
-        [HttpGet("get-item-by-id/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<ResponseHandle<ItemOutputDto>> GetItemById(Guid id)
         {
             return await _itemServices.GetItemById(id);
         }
 
-        [HttpPost("create-item")]
+        [HttpPost]
         public async ValueTask<ResponseHandle<ItemOutputDto>> CreateItem(ItemCreateDto itemCreateDto)
         {
             return await _itemServices.CreateItem(itemCreateDto);
         }
 
-        [HttpPut("update-item")]
-        public async ValueTask<ResponseHandle<ItemOutputDto>> UpdateItem(ItemInputDto itemInputDto)
+        [HttpPut("{id}")]
+        public async ValueTask<ResponseHandle<ItemOutputDto>> UpdateItem(Guid id, ItemInputDto itemInputDto)
         {
-            return await _itemServices.UpdateItem(itemInputDto);
+            return await _itemServices.UpdateItem(id, itemInputDto);
         }
 
-        [HttpDelete("delete-item")]
+        [HttpDelete("{id}")]
         public async ValueTask<ResponseHandle<ItemOutputDto>> DeleteItem(Guid id)
         {
             return await _itemServices.DeleteItem(id);

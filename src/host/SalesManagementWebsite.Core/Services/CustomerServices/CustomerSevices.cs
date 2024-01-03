@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Customer;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -35,8 +36,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list of [Customer]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Customer))
                     };
                 }
 
@@ -46,9 +46,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = null,
-                    ListData = cusListOutput,
-                    ErrorMessage = string.Empty
+                    ListData = cusListOutput
                 };
             }
             catch (Exception ex)
@@ -65,14 +63,13 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
             {
                 var gCustomer = await _unitOfWork.CustomerRepository.GetAsync(cus => cus.Id.Equals(id));
 
-                if (gCustomer == null)
+                if (gCustomer == null)  
                 {
                     return new ResponseHandle<CustomerOuputDto>
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Customer] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Customer), id)
                     };
                 }
 
@@ -82,8 +79,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)
@@ -111,8 +107,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)
@@ -123,11 +118,11 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
             }
         }
 
-        public async ValueTask<ResponseHandle<CustomerOuputDto>> UpdateCustomer(CustomerInputDto customerInputDto)
+        public async ValueTask<ResponseHandle<CustomerOuputDto>> UpdateCustomer(Guid id, CustomerInputDto customerInputDto)
         {
             try
             {
-                var customer = await _unitOfWork.CustomerRepository.GetAsync(c => c.Id.Equals(customerInputDto.Id));
+                var customer = await _unitOfWork.CustomerRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (customer == null)
                 {
@@ -135,8 +130,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the [Customer]: {JsonSerializer.Serialize(customerInputDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Customer), id)
                     };
                 }
 
@@ -160,8 +154,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)
@@ -184,8 +177,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Item] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Customer), id)
                     };
                 }
 
@@ -199,8 +191,7 @@ namespace SalesManagementWebsite.Core.Services.CustomerServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = cateOutput,
-                    ErrorMessage = string.Empty
+                    Data = cateOutput
                 };
             }
             catch (Exception ex)

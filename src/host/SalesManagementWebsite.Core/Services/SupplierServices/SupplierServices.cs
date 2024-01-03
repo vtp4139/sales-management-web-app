@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.Supplier;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -35,8 +36,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list of [Supplier]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Supplier))
                     };
                 }
 
@@ -46,9 +46,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = null,
-                    ListData = supplierListOutput,
-                    ErrorMessage = string.Empty
+                    ListData = supplierListOutput
                 };
             }
             catch (Exception ex)
@@ -71,8 +69,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Supplier] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Supplier), id)
                     };
                 }
 
@@ -82,8 +79,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = supplierOutput,
-                    ErrorMessage = string.Empty
+                    Data = supplierOutput
                 };
             }
             catch (Exception ex)
@@ -111,8 +107,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = supplierOutput,
-                    ErrorMessage = string.Empty
+                    Data = supplierOutput
                 };
             }
             catch (Exception ex)
@@ -123,11 +118,11 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
             }
         }
 
-        public async ValueTask<ResponseHandle<SupplierOutputDto>> UpdateSupplier(SupplierUpdateDto supplierUpdateDto)
+        public async ValueTask<ResponseHandle<SupplierOutputDto>> UpdateSupplier(Guid id, SupplierUpdateDto supplierUpdateDto)
         {
             try
             {
-                var supplier = await _unitOfWork.SupplierRepository.GetAsync(c => c.Id.Equals(supplierUpdateDto.Id));
+                var supplier = await _unitOfWork.SupplierRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (supplier == null)
                 {
@@ -135,8 +130,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the [Supplier]: {JsonSerializer.Serialize(supplierUpdateDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Supplier), id)
                     };
                 }
 
@@ -157,8 +151,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = supplierOutput,
-                    ErrorMessage = string.Empty
+                    Data = supplierOutput
                 };
             }
             catch (Exception ex)
@@ -181,8 +174,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Supplier] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Supplier), id)
                     };
                 }
 
@@ -196,8 +188,7 @@ namespace SalesManagementWebsite.Core.Services.SupplierServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = cateOutput,
-                    ErrorMessage = string.Empty
+                    Data = cateOutput
                 };
             }
             catch (Exception ex)

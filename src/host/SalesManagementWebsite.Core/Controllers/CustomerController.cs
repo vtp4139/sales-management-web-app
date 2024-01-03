@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
-    [Route("api/customer")]
+    [Route("api/customers")]
     [ApiController]
     public class CustomerController : Controller, ICustomerSevices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _customerSevices = customerSevices;
         }
 
-        [HttpGet("get-all-customers")]
+        [HttpGet]
         public ValueTask<ResponseHandle<CustomerOuputDto>> GetAllCustomer()
         {
             return _customerSevices.GetAllCustomer();
         }
 
-        [HttpGet("get-customer-by-id/{id}")]
+        [HttpGet("{id}")]
         public ValueTask<ResponseHandle<CustomerOuputDto>> GetCustomer(Guid id)
         {
             return _customerSevices.GetCustomer(id);
         }
 
-        [HttpPost("create-customer")]
+        [HttpPost]
         public ValueTask<ResponseHandle<CustomerOuputDto>> CreateCustomer(CustomerCreateDto customerCreateDto)
         {
             return _customerSevices.CreateCustomer(customerCreateDto);
         }
 
-        [HttpPut("update-customer")]
-        public ValueTask<ResponseHandle<CustomerOuputDto>> UpdateCustomer(CustomerInputDto customerInputDto)
+        [HttpPut("{id}")]
+        public ValueTask<ResponseHandle<CustomerOuputDto>> UpdateCustomer(Guid id, CustomerInputDto customerInputDto)
         {
-            return _customerSevices.UpdateCustomer(customerInputDto);
+            return _customerSevices.UpdateCustomer(id, customerInputDto);
         }
 
-        [HttpDelete("delete-customer")]
+        [HttpDelete("{id}")]
         public ValueTask<ResponseHandle<CustomerOuputDto>> DeleteCustomer(Guid id)
         {
             return _customerSevices.DeleteCustomer(id);

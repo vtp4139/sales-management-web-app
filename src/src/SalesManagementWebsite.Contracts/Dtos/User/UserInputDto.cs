@@ -4,9 +4,6 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
 {
     public class UserInputDto
     {
-        [Required(ErrorMessage = "{0} is empty!")]
-        public string UserName { get; set; } = string.Empty;
-
         [StringLength(100, ErrorMessage = "{0} not over 100 char")]
         public string Name { get; set; } = string.Empty;
 

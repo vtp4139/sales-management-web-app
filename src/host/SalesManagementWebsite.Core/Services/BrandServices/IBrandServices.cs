@@ -8,7 +8,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
         ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands();
         ValueTask<ResponseHandle<BrandOutputDto>> CreateBrand(BrandCreateDto categoryCreateDto);
         ValueTask<ResponseHandle<BrandOutputDto>> GetBrand(Guid id);
-        ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(BrandInputDto categoryInputDto);
+        ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(Guid id, BrandInputDto categoryInputDto);
         ValueTask<ResponseHandle<BrandOutputDto>> DeleteBrand(Guid id);
     }
 }
