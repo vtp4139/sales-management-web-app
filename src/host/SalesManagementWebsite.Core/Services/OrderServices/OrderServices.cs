@@ -84,8 +84,7 @@ namespace SalesManagementWebsite.Core.Services.OrderServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = orderOutput,
-                    ErrorMessage = string.Empty
+                    Data = orderOutput
                 };
             }
             catch (Exception ex)

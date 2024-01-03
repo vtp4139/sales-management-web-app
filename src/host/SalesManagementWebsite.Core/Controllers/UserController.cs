@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.User;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
-    [Route("api/user")]
+    [Route("api/users")]
     [ApiController] 
     public class UserController : Controller, IUserService
     {
