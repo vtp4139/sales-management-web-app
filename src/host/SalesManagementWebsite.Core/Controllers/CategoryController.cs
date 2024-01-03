@@ -6,8 +6,8 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 
 namespace SalesManagementWebsite.Core.Controllers
 {
-    [Authorize]
-    [Route("api/category")]
+    //[Authorize]
+    [Route("api/categories")]
     [ApiController] 
     public class CategoryController : Controller, ICategoryServices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _categoryServices = categoryServices;
         }
 
-        [HttpGet("get-all-categories")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetAllCategories()
         {
             return await _categoryServices.GetAllCategories();
         }
 
-        [HttpGet("get-categoryget-by-id/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> GetCategory(Guid id)
         {
             return await _categoryServices.GetCategory(id);
         }
 
-        [HttpPost("create-category")]
+        [HttpPost]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> CreateCategory(CategoryCreateDto categoryCreateDto)
         {
             return await _categoryServices.CreateCategory(categoryCreateDto);
         }
 
-        [HttpPut("update-category")]
-        public async ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(CategoryInputDto categoryInputDto)
+        [HttpPut("{id}")]
+        public async ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(Guid id, CategoryInputDto categoryInputDto)
         {
-            return await _categoryServices.UpdateCategory(categoryInputDto);
+            return await _categoryServices.UpdateCategory(id, categoryInputDto);
         }
 
-        [HttpDelete("delete-category")]
+        [HttpDelete("{id}")]
         public async ValueTask<ResponseHandle<CategoryOutputDto>> DeleteCategory(Guid id)
         {
             return await _categoryServices.DeleteCategory(id);

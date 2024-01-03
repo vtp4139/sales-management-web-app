@@ -8,7 +8,7 @@ namespace SalesManagementWebsite.Core.Services.CategoryServices
         ValueTask<ResponseHandle<CategoryOutputDto>> GetAllCategories();
         ValueTask<ResponseHandle<CategoryOutputDto>> CreateCategory(CategoryCreateDto categoryCreateDto);
         ValueTask<ResponseHandle<CategoryOutputDto>> GetCategory(Guid id);
-        ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(CategoryInputDto categoryInputDto);
+        ValueTask<ResponseHandle<CategoryOutputDto>> UpdateCategory(Guid id, CategoryInputDto categoryInputDto);
         ValueTask<ResponseHandle<CategoryOutputDto>> DeleteCategory(Guid id);
     }
 }
