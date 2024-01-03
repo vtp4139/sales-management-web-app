@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SalesManagementWebsite.Contracts.Dtos.Brand;
 using SalesManagementWebsite.Contracts.Dtos.Response;
+using SalesManagementWebsite.Contracts.Utilities;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -35,8 +36,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get list [Brands]"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_LIST, nameof(Brand))
                     };
                 }
 
@@ -46,9 +46,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = null,
-                    ListData = brandListOutput,
-                    ErrorMessage = string.Empty
+                    ListData = brandListOutput
                 };
             }
             catch (Exception ex)
@@ -71,8 +69,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Brand] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Brand), id)
                     };
                 }
 
@@ -82,8 +79,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
-                    ErrorMessage = string.Empty
+                    Data = brandOutput
                 };
             }
             catch (Exception ex)
@@ -111,8 +107,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
-                    ErrorMessage = string.Empty
+                    Data = brandOutput
                 };
             }
             catch (Exception ex)
@@ -123,11 +118,11 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
             }
         }
 
-        public async ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(BrandInputDto BrandInputDto)
+        public async ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(Guid id, BrandInputDto BrandInputDto)
         {
             try
             {
-                var brand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(BrandInputDto.Id));
+                var brand = await _unitOfWork.BrandRepository.GetAsync(c => c.Id.Equals(id));
 
                 if (brand == null)
                 {
@@ -135,8 +130,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get the [Brand]: {JsonSerializer.Serialize(BrandInputDto)}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Brand), id)
                     };
                 }
 
@@ -155,8 +149,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = BrandOutput,
-                    ErrorMessage = string.Empty
+                    Data = BrandOutput
                 };
             }
             catch (Exception ex)
@@ -179,8 +172,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                     {
                         IsSuccess = false,
                         StatusCode = (int)HttpStatusCode.NotFound,
-                        Data = null,
-                        ErrorMessage = $"Can not get [Brand] with [id]: {id}"
+                        ErrorMessage = string.Format(MessageHandle.ERROR_NOT_FOUND_BY_ID, nameof(Brand), id)
                     };
                 }
 
@@ -194,8 +186,7 @@ namespace SalesManagementWebsite.Core.Services.BrandServices
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = brandOutput,
-                    ErrorMessage = string.Empty
+                    Data = brandOutput
                 };
             }
             catch (Exception ex)

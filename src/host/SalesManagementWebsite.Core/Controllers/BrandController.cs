@@ -7,7 +7,7 @@ using SalesManagementWebsite.Contracts.Dtos.Response;
 namespace SalesManagementWebsite.Core.Controllers
 {
     [Authorize]
-    [Route("api/brand")]
+    [Route("api/brands")]
     [ApiController]
     public class BrandController : Controller, IBrandServices
     {
@@ -18,31 +18,31 @@ namespace SalesManagementWebsite.Core.Controllers
             _brandServices = brandServices;
         }
 
-        [HttpGet("get-all-brands")]
+        [HttpGet]
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetAllBrands()
         {
             return await _brandServices.GetAllBrands();
         }
 
-        [HttpGet("get-brand-by-id/{id}")]
+        [HttpGet("{id}")]
         public async ValueTask<ResponseHandle<BrandOutputDto>> GetBrand(Guid id)
         {
             return await _brandServices.GetBrand(id);
         }
 
-        [HttpPost("create-brand")]
+        [HttpPost]
         public async ValueTask<ResponseHandle<BrandOutputDto>> CreateBrand(BrandCreateDto brandCreateDto)
         {
             return await _brandServices.CreateBrand(brandCreateDto);
         }
 
-        [HttpPut("update-brand")]
-        public async ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(BrandInputDto brandInputDto)
+        [HttpPut("{id}")]
+        public async ValueTask<ResponseHandle<BrandOutputDto>> UpdateBrand(Guid id, BrandInputDto brandInputDto)
         {
-            return await _brandServices.UpdateBrand(brandInputDto);
+            return await _brandServices.UpdateBrand(id, brandInputDto);
         }
 
-        [HttpDelete("delete-brand")]
+        [HttpDelete("{id}")]
         public async ValueTask<ResponseHandle<BrandOutputDto>> DeleteBrand(Guid id)
         {
             return await _brandServices.DeleteBrand(id);
