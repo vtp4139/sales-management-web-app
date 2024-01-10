@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nest;
 using SalesManagementWebsite.Contracts.Dtos.ElasticSearch;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
@@ -36,6 +37,12 @@ namespace SalesManagementWebsite.Core.Controllers
         public async ValueTask<ResponseHandle<ItemOutputDto>> SearchItemsOnES([FromQuery] List<string> ids)
         {
             return await _elasticSearchServices.SearchItemsOnES(ids);
+        }
+
+        [HttpDelete("items/{id}")]
+        public async ValueTask<bool> DeleteItemOnES(string id)
+        {
+            return await _elasticSearchServices.DeleteItemOnES(id);
         }
     }
 }
