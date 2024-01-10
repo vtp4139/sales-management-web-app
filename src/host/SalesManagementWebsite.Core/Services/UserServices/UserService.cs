@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SalesManagementWebsite.Core.Services.HashServices;
 using SalesManagementWebsite.Core.Services.JWTServices;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
@@ -10,6 +9,7 @@ using System.Data;
 using System.Net;
 using System.Text.Json;
 using SalesManagementWebsite.Contracts.Utilities;
+using SalesManagementWebsite.Core.Helpers;
 
 namespace SalesManagementWebsite.Core.Services.UserServices
 {

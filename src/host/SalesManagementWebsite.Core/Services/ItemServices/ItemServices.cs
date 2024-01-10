@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Castle.Core.Resource;
+using SalesManagementWebsite.Contracts.Dtos.ElasticSearch;
 using SalesManagementWebsite.Contracts.Dtos.Item;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Utilities;
+using SalesManagementWebsite.Core.Services.ElasticSearchServices;
 using SalesManagementWebsite.Domain.Entities;
 using SalesManagementWebsite.Domain.UnitOfWork;
 using System.Net;
@@ -16,13 +18,19 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private IElasticSearchServices _elasticSearchServices { get; set; }
 
-        public ItemServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemServices> logger, IHttpContextAccessor httpContextAccessor)
+        public ItemServices(IUnitOfWork unitOfWork, 
+                            IMapper mapper, 
+                            ILogger<ItemServices> logger, 
+                            IHttpContextAccessor httpContextAccessor,
+                            IElasticSearchServices elasticSearchServices)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
+            _elasticSearchServices = elasticSearchServices;
         }
 
         public async ValueTask<ResponseHandle<ItemListDto>> GetAllItems()
@@ -104,12 +112,16 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
 
                 var itemOutput = _mapper.Map<ItemOutputDto>(item);
 
+                //Sync ES Item
+                var itemIndex = _mapper.Map<ItemIndex>(item);
+
+                await _elasticSearchServices.SyncItemToES(itemIndex);
+
                 return new ResponseHandle<ItemOutputDto>
                 {
                     IsSuccess = true,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Data = itemOutput,
-                    ErrorMessage = string.Empty
+                    Data = itemOutput
                 };
             }
             catch (Exception ex)

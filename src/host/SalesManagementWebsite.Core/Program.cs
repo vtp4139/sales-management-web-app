@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SalesManagementWebsite.Core.Helpers;
 using SalesManagementWebsite.Core.Services.BrandServices;
 using SalesManagementWebsite.Core.Services.CategoryServices;
 using SalesManagementWebsite.Core.Services.CustomerServices;
+using SalesManagementWebsite.Core.Services.ElasticSearchServices;
 using SalesManagementWebsite.Core.Services.ItemServices;
 using SalesManagementWebsite.Core.Services.KafkaServices;
 using SalesManagementWebsite.Core.Services.OrderServices;
@@ -84,6 +86,9 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+//Config Elastic Search
+builder.Services.AddElasticSearch(builder.Configuration);
+
 //Dependency Injection
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -96,6 +101,7 @@ builder.Services.AddTransient(typeof(IOrderServices), typeof(OrderServices));
 builder.Services.AddTransient(typeof(IKafkaServices), typeof(KafkaServices));
 builder.Services.AddTransient(typeof(ISupplierServices), typeof(SupplierServices));
 builder.Services.AddTransient(typeof(IRoleServices), typeof(RoleServices));
+builder.Services.AddTransient(typeof(IElasticSearchServices), typeof(ElasticSearchServices));
 
 var app = builder.Build();
 
