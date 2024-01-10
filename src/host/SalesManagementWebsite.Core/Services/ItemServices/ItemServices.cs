@@ -110,12 +110,12 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 _unitOfWork.ItemRepository.Add(item);
                 await _unitOfWork.CommitAsync();
 
-                var itemOutput = _mapper.Map<ItemOutputDto>(item);
-
                 //Sync ES Item
                 var itemIndex = _mapper.Map<ItemIndex>(item);
 
                 await _elasticSearchServices.SyncItemToES(itemIndex);
+
+                var itemOutput = _mapper.Map<ItemOutputDto>(item);            
 
                 return new ResponseHandle<ItemOutputDto>
                 {
@@ -162,6 +162,11 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 _unitOfWork.ItemRepository.Update(item);
                 await _unitOfWork.CommitAsync();
 
+                //Sync ES Item
+                var itemIndex = _mapper.Map<ItemIndex>(item);
+
+                await _elasticSearchServices.SyncItemToES(itemIndex);
+
                 var itemOutput = _mapper.Map<ItemOutputDto>(item);
 
                 return new ResponseHandle<ItemOutputDto>
@@ -198,6 +203,8 @@ namespace SalesManagementWebsite.Core.Services.ItemServices
                 _unitOfWork.ItemRepository.Remove(gItem);
                 await _unitOfWork.CommitAsync();
 
+                //Delete on ES
+                await _elasticSearchServices.DeleteItemOnES(id.ToString());
 
                 var cateOutput = _mapper.Map<ItemOutputDto>(gItem);
 

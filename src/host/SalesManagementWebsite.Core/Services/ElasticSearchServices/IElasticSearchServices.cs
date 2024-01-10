@@ -9,5 +9,6 @@ namespace SalesManagementWebsite.Core.Services.ElasticSearchServices
         ValueTask<bool> SyncItemToES(ItemIndex itemIndex);
         ValueTask<ResponseHandle<ItemOutputDto>> SearchItemOnES(string id);
         ValueTask<ResponseHandle<ItemOutputDto>> SearchItemsOnES(List<string> ids);
+        ValueTask<bool> DeleteItemOnES(string id);
     }
 }

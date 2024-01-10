@@ -34,15 +34,27 @@ namespace SalesManagementWebsite.Core.Services.ElasticSearchServices
 
         public async ValueTask<bool> SyncItemToES(ItemIndex itemIndex)
         {
-            var itemIndexs = _mapper.Map<ItemIndex>(itemIndex);
+            var itemCheck = await SearchItemOnES(itemIndex.Id);
 
-            var result = await _elasticClient.IndexDocumentAsync(itemIndexs);
-
-            if (!result.IsValid)
+            if (itemCheck.Data == null) 
             {
-                return false;
-            }
+                var response = await _elasticClient.IndexDocumentAsync(itemIndex);
 
+                if (!response.IsValid)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                var response = await _elasticClient.UpdateAsync<ItemIndex>(itemIndex.Id, u => u.Doc(itemIndex));
+
+                if (!response.IsValid)
+                {
+                    return false;
+                }
+            }
+            
             return true;
         }
 
@@ -123,6 +135,25 @@ namespace SalesManagementWebsite.Core.Services.ElasticSearchServices
                 StatusCode = (int)HttpStatusCode.OK,
                 ListData = documents
             };
+        }
+
+        public async ValueTask<bool> DeleteItemOnES(string id)
+        {
+            var response = await _elasticClient.DeleteByQueryAsync<ItemIndex>(q => q
+                .Query(rq => rq
+                    .MatchPhrase(m => m
+                    .Field(f => f.Id)
+                    .Query(id))
+                )
+                .Index("indice_item")
+            );
+
+            if (response.ServerError != null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
