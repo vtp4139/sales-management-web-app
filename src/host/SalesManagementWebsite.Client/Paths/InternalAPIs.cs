@@ -2,6 +2,7 @@
 {
     public static class InternalAPIs
     {
-        public const string LOGIN = "/api/users/login";
+        public const string Login = "/api/users/login";
+        public const string GetUser = "/api/users/{0}";
     }
 }

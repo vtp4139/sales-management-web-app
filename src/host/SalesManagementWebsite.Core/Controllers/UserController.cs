@@ -25,7 +25,7 @@ namespace SalesManagementWebsite.Core.Controllers
             return await _userService.Login(userLoginDto);
         }
 
-        [Authorize(Roles = "administration")]
+        //[Authorize(Roles = "administration")]
         [HttpPost("register")]
         public async ValueTask<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
         {
