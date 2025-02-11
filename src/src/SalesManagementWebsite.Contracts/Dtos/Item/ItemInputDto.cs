@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Nest;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesManagementWebsite.Contracts.Dtos.Item
 {
@@ -17,10 +18,12 @@ namespace SalesManagementWebsite.Contracts.Dtos.Item
 
 
         [Required(ErrorMessage = "{0} is empty!")]
+        [Keyword]
         public Guid CategoryId { get; set; }
 
 
         [Required(ErrorMessage = "{0} is empty!")]
+        [Keyword]
         public Guid BrandId { get; set; }
 
 

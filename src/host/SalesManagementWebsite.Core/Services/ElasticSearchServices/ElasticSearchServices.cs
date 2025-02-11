@@ -95,7 +95,7 @@ namespace SalesManagementWebsite.Core.Services.ElasticSearchServices
             {
                 new TermsQuery
                 {
-                    Field = "id.keyword", //Chưa đánh keyword sẽ cần xài cái này
+                    Field = "brandId.keyword", //Chưa đánh keyword sẽ cần xài cái này
                     Terms = ids
                 }
             };

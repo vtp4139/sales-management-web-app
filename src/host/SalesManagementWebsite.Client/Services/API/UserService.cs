@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SalesManagementWebsite.Client.Paths;
 using SalesManagementWebsite.Client.Services.Intefaces;
 using SalesManagementWebsite.Contracts.Dtos.Response;
 using SalesManagementWebsite.Contracts.Dtos.User;
@@ -28,10 +29,15 @@ namespace SalesManagementWebsite.Client.Services.API
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(userLoginDto),
                 Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync(_configuration["BackendUrl:Default"] + "/api/user/login", httpContent);
+            var path = $"{_configuration["BackendUrl:Default"]}{InternalAPIs.LOGIN}";
+
+            var response = await client.PostAsync(path, httpContent);
 
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<ResponseHandle<UserOuputDto>>();
+
+            var output = await response.Content.ReadFromJsonAsync<ResponseHandle<UserOuputDto>>();
+
+            return output != null ? output : null;
         }
 
         public Task<ResponseHandle<UserOuputDto>> Register(UserRegisterDto userRegisterDto)
@@ -48,7 +54,7 @@ namespace SalesManagementWebsite.Client.Services.API
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
 
-            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/user/get-user/" + userName);
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/users/" + userName);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<ResponseHandle<UserOuputDto>>();
         }
