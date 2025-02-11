@@ -1,12 +1,21 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SalesManagementWebsite.Domain.Entities
 {
     public class Supplier : BaseModel
     {
-        public string CompanyName { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
+        [Required]
+        public required string CompanyName { get; set; }
+
+        [Required]
+        public required string Address { get; set; }
+
+        [Required]
+        [Column(TypeName = "VARCHAR(20)")]
+        public required string Phone { get; set; }
+
+        public string? City { get; set; }
 
         public List<Item> Items { get; set; } = new List<Item>();
     }
