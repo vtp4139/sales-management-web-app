@@ -28,12 +28,17 @@ public class ApiService : IApiService
 
     public async Task<T?> SendRequestAsync<T>(HttpMethod method, string endpoint, object? requestData = null)
     {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true // Không phân biệt hoa thường
+        };
+
         var client = CreateClient();
         var request = new HttpRequestMessage(method, $"{_configuration["BackendUrl:Default"]}{endpoint}");
 
         if (requestData != null)
         {
-            var json = JsonSerializer.Serialize(requestData);
+            var json = JsonSerializer.Serialize(requestData, options);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
         }
 
@@ -46,6 +51,6 @@ public class ApiService : IApiService
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(responseContent);
+        return JsonSerializer.Deserialize<T>(responseContent, options);
     }
 }
