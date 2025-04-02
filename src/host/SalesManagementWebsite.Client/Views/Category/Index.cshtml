@@ -1,0 +1,103 @@
+﻿@using SalesManagementWebsite.Contracts.Dtos.Category
+@model ResponseHandle<CategoryOutputDto>
+
+<div class="mb-2">
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#categoryModal" onclick="openCreateModal()">
+        <i class="fas fa-plus"></i> Tạo mới
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryModalLabel">Tạo danh mục mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm" method="post" action="@Url.Action("CreateCategory", "Category")">
+                    <input type="hidden" id="categoryId" name="Id">
+                    <div class="mb-2">
+                        <label for="categoryName" class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control form-control-sm" id="categoryName" name="Name" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="categoryDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control form-control-sm" id="categoryDescription" name="Description" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary btn-sm" form="categoryForm">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead class="table-light">
+            <tr>
+                <th>Tên danh mục</th>
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model.ListData)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                    <td>@category.Description</td>
+                    <td>@category.CreatedDate</td>
+                    <td class="d-flex gap-1">
+                        <button class="btn btn-warning btn-sm w-25"
+                                data-id="@category.Id"
+                                data-name="@category.Name"
+                                data-description="@category.Description"
+                                onclick="openUpdateModal(this)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm w-25" onclick="deleteCategory('@category.Id')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function openCreateModal() {
+        document.getElementById("categoryModalLabel").innerText = "Tạo danh mục mới";
+        document.getElementById("categoryForm").action = "@Url.Action("CreateCategory", "Category")";
+        document.getElementById("categoryId").value = "";
+        document.getElementById("categoryName").value = "";
+        document.getElementById("categoryDescription").value = "";
+    }
+
+    function openUpdateModal(button) {
+        var id = button.getAttribute("data-id");
+        var name = button.getAttribute("data-name");
+        var description = button.getAttribute("data-description");
+
+        document.getElementById("categoryModalLabel").innerText = "Cập nhật danh mục";
+        document.getElementById("categoryForm").action = `${"@Url.Action("UpdateCategory", "Category")"}?id=${id}`;
+        document.getElementById("categoryId").value = id;
+        document.getElementById("categoryName").value = name;
+        document.getElementById("categoryDescription").value = description;
+
+        var modal = new bootstrap.Modal(document.getElementById('categoryModal'));
+        modal.show();
+    }
+
+    function deleteCategory(id) {
+        if (confirm("Bạn có chắc muốn xóa danh mục này?")) {
+            window.location.href = '@Url.Action("DeleteCategory", "Category")?id=' + encodeURIComponent(id);
+        }
+    }
+</script>
