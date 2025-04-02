@@ -8,12 +8,10 @@ namespace SalesManagementWebsite.Client.Services.API
     public class CategoryService : ICategoryService
     {
         private readonly IApiService _apiService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoryService(IApiService apiService, IHttpContextAccessor httpContextAccessor)
+        public CategoryService(IApiService apiService)
         {
             _apiService = apiService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ResponseHandle<CategoryOutputDto>> GetAllCategories()

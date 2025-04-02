@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nest;
 using SalesManagementWebsite.Client.Services.Intefaces;
 using SalesManagementWebsite.Contracts.Dtos.Category;
 

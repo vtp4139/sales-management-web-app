@@ -1,0 +1,103 @@
+﻿@using SalesManagementWebsite.Contracts.Dtos.Brand
+@model ResponseHandle<BrandOutputDto>
+
+<div class="mb-2">
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#brandModal" onclick="openCreateModal()">
+        <i class="fas fa-plus"></i> Tạo mới
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="brandModalLabel">Tạo nhãn hàng mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="brandForm" method="post" action="@Url.Action("CreateBrand", "Brand")">
+                    <input type="hidden" id="brandId" name="Id">
+                    <div class="mb-2">
+                        <label for="brandName" class="form-label">Tên nhãn hàng</label>
+                        <input type="text" class="form-control form-control-sm" id="brandName" name="Name" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="brandDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control form-control-sm" id="brandDescription" name="Description" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary btn-sm" form="brandForm">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead class="table-light">
+            <tr>
+                <th>Tên nhãn hàng</th>
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var brand in Model.ListData)
+            {
+                <tr>
+                    <td>@brand.Name</td>
+                    <td>@brand.Description</td>
+                    <td>@brand.CreatedDate</td>
+                    <td class="d-flex gap-1">
+                        <button class="btn btn-warning btn-sm w-25"
+                                data-id="@brand.Id"
+                                data-name="@brand.Name"
+                                data-description="@brand.Description"
+                                onclick="openUpdateModal(this)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm w-25" onclick="deleteCategory('@brand.Id')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function openCreateModal() {
+        document.getElementById("brandModalLabel").innerText = "Tạo nhãn hàng mới";
+        document.getElementById("brandForm").action = "@Url.Action("CreateBrand", "Brand")";
+        document.getElementById("brandId").value = "";
+        document.getElementById("brandName").value = "";
+        document.getElementById("brandDescription").value = "";
+    }
+
+    function openUpdateModal(button) {
+        var id = button.getAttribute("data-id");
+        var name = button.getAttribute("data-name");
+        var description = button.getAttribute("data-description");
+
+        document.getElementById("brandModalLabel").innerText = "Cập nhật nhãn hàng";
+        document.getElementById("brandForm").action = `${"@Url.Action("UpdateBrand", "Brand")"}?id=${id}`;
+        document.getElementById("brandId").value = id;
+        document.getElementById("brandName").value = name;
+        document.getElementById("brandDescription").value = description;
+
+        var modal = new bootstrap.Modal(document.getElementById('brandModal'));
+        modal.show();
+    }
+
+    function deleteCategory(id) {
+        if (confirm("Bạn có chắc muốn xóa nhãn hàng này?")) {
+            window.location.href = '@Url.Action("DeleteBrand", "Brand")?id=' + encodeURIComponent(id);
+        }
+    }
+</script>
