@@ -13,6 +13,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IBrandService, BrandService>();
+builder.Services.AddTransient<IApiService, ApiService>();
 
 //Use Notify
 builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions

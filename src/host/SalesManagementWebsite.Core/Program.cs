@@ -61,7 +61,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseNpgsql(connectionString));
+builder.Services.AddDbContext<SalesManagementDBContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -7,7 +7,6 @@ namespace SalesManagementWebsite.Infrastructure
     {
         public SalesManagementDBContext(DbContextOptions<SalesManagementDBContext> options) : base(options) { }
 
-        //User
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }

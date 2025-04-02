@@ -1,14 +1,27 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace SalesManagementWebsite.Domain.Entities
 {
     public class Customer : BaseModel
     {
-        public string CustomerName { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public string PostalCode { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty;
-        public string Fax { get; set; } = string.Empty;
+        [Required]
+        [Column(TypeName = "NVARCHAR(500)")]
+        public required string CustomerName { get; set; }
+
+        [Column(TypeName = "NVARCHAR(500)")]
+        public string? Address { get; set; }
+
+        public string? City { get; set; }
+
+        public string? PostalCode { get; set; }
+
+        [Column(TypeName = "VARCHAR(20)")]
+        public string? Phone { get; set; }
+
+        [Column(TypeName = "VARCHAR(20)")]
+        public string? Fax { get; set; }
+
         public List<Order> Orders { get; set; } = new List<Order>();
     }
 }

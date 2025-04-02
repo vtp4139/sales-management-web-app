@@ -22,9 +22,15 @@ namespace SalesManagementWebsite.Client.Controllers
 
         public ActionResult Index()
         {
-            //if user is login, redirect to home page
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+            // If user is login, redirect to home page
+            var user = User;
+
+            if (User != null && User.Identities != null && User.Identities.Any())
+            {
+                if (User.Identity.IsAuthenticated)
+                    return RedirectToAction("Index", "Home");
+            }
+            
             return View();
         }
 

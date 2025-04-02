@@ -11,10 +11,10 @@ namespace SalesManagementWebsite.Domain.Entities
         //Get employee create order
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public required User User { get; set; }
 
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public required Customer Customer { get; set; }
     }
 }

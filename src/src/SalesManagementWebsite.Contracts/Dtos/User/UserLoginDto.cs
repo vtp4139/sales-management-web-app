@@ -4,10 +4,10 @@ namespace SalesManagementWebsite.Contracts.Dtos.User
 {
     public class UserLoginDto
     {
-        [Required(ErrorMessage = "{0} is empty!")]
-        public string UserName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Tên đăng nhập không được để trống")]
+        public required string UserName { get; set; }
 
-        [Required(ErrorMessage = "{0} is empty!")]
-        public string Password { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
+        public required string Password { get; set; }
     }
 }
